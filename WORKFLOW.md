@@ -80,16 +80,29 @@ Rules:
 4. Reproduce the issue or establish the current baseline before changing code.
 5. Run the validation required by the ticket or by the modified files before
    handoff.
-6. Only move the ticket to `Human Review` after the implementation, validation,
-   and PR feedback sweep are complete.
-7. If the issue moves to `Merging`, open `.codex/skills/land/SKILL.md` and
+6. Do not develop on `main`. Create or reuse an issue-specific branch before
+   preparing the final handoff.
+7. Before moving a ticket to `Human Review`, use the `commit` and `push`
+   skills to:
+   - commit all intended changes
+   - push the branch to `origin`
+   - create or update a GitHub PR against `main`
+8. Record the branch name, commit SHA, validation results, and GitHub PR URL in
+   `## Codex Workpad`. Do not move the ticket to `Human Review` unless the PR
+   exists and the workpad contains that URL.
+9. Only move the ticket to `Human Review` after the implementation, validation,
+   commit, push, PR creation, and PR feedback sweep are complete.
+10. If GitHub auth, push permissions, or PR creation are blocked, keep the
+   ticket in an active state and document the blocker in `## Codex Workpad`
+   instead of moving it to `Human Review`.
+11. If the issue moves to `Merging`, open `.codex/skills/land/SKILL.md` and
    follow it.
-8. Before making changes, read the three project source-of-truth documents
+12. Before making changes, read the three project source-of-truth documents
    listed above and align the implementation with them.
-9. Prefer the smallest usable MVP increment over speculative architecture.
-10. Keep all outputs source-grounded and inspectable; avoid turning the product
+13. Prefer the smallest usable MVP increment over speculative architecture.
+14. Keep all outputs source-grounded and inspectable; avoid turning the product
     into a generic chat interface.
-11. If the Linear issue conflicts with the prototype spec, follow the issue but
+15. If the Linear issue conflicts with the prototype spec, follow the issue but
     record the conflict in `## Codex Workpad`.
 
 Related skills:
