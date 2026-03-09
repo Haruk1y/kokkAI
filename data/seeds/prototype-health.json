@@ -1,0 +1,15 @@
+{
+  "ticket": "HAR-5",
+  "prototype": "bootstrap-repository",
+  "directories": [
+    "apps/web",
+    "apps/api",
+    "packages/shared",
+    "data/seeds"
+  ],
+  "mvpConstraints": [
+    "smallest inspectable MVP",
+    "health page and health API route",
+    "offline-friendly Node bootstrap"
+  ]
+}

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>kokkAI Prototype 01 Bootstrap</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <p class="eyebrow">HAR-5</p>
+      <h1>Prototype 01 Bootstrap</h1>
+      <p class="lede">
+        The repository bootstrap is live. This page validates that the web app
+        can reach the API health route and render its shared schema payload.
+      </p>
+
+      <section class="panel">
+        <div class="row">
+          <span class="label">Web entrypoint</span>
+          <span class="value">online</span>
+        </div>
+        <div class="row">
+          <span class="label">API endpoint</span>
+          <span class="value" id="endpoint">pending</span>
+        </div>
+        <div class="row">
+          <span class="label">API status</span>
+          <span class="value" id="status">pending</span>
+        </div>
+        <div class="row">
+          <span class="label">Last check</span>
+          <span class="value" id="checked-at">pending</span>
+        </div>
+      </section>
+
+      <section class="panel panel-code">
+        <h2>Response</h2>
+        <pre id="payload">Waiting for API response...</pre>
+      </section>
+    </main>
+
+    <script>
+      window.__KOKKAI_CONFIG__ = {
+        apiBaseUrl: __API_BASE_URL__,
+        healthRoute: __HEALTH_ROUTE__
+      };
+    </script>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
