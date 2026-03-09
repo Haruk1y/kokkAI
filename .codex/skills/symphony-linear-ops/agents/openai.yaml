@@ -1,0 +1,4 @@
+interface:
+  display_name: "Symphony Linear Ops"
+  short_description: "Operate Symphony with Linear-backed workflows"
+  default_prompt: "Use $symphony-linear-ops to verify Linear auth, resolve project slug, and operate Symphony against a Linear project."

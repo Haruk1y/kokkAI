@@ -14,6 +14,9 @@ This repository now contains the minimum files needed to run
 
 - `WORKFLOW.md`
 - `.env.symphony.example`
+- `docs/proposal-brief.md`
+- `docs/prototype-spec.md`
+- `docs/symphony-backlog.md`
 - `.codex/skills/commit/SKILL.md`
 - `.codex/skills/pull/SKILL.md`
 - `.codex/skills/push/SKILL.md`
@@ -95,6 +98,29 @@ is the project-specific part of the URL.
   `SOURCE_REPO_URL` in `.env.symphony.local`
 - GitHub PR automation in the repo-local skills assumes `gh auth status`
   succeeds, and it is not logged in yet on this machine
+
+## Proposal-Driven Prototyping
+
+The repository now includes a structured implementation context derived from
+`未踏IT2026_提案資料1.pdf`.
+
+- `docs/proposal-brief.md`
+  translates the proposal into product goals and constraints
+- `docs/prototype-spec.md`
+  defines the MVP and suggested architecture
+- `docs/symphony-backlog.md`
+  turns the proposal into issue-sized implementation steps for Symphony
+
+The intended workflow is:
+
+1. create a Linear project for `kokkAI`
+2. create issues from `docs/symphony-backlog.md`
+3. update the `project_slug` in `WORKFLOW.md`
+4. start Symphony
+5. move the first issue to `Todo`
+
+This gives Symphony enough context to do autonomous MVP development instead of
+working from the PDF directly.
 
 ## First Useful Check
 

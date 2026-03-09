@@ -2,7 +2,7 @@
 tracker:
   kind: linear
   api_key: $LINEAR_API_KEY
-  project_slug: "replace-with-linear-project-slug"
+  project_slug: "f7a29ad67b60"
   active_states:
     - Todo
     - In Progress
@@ -37,6 +37,12 @@ codex:
 
 You are working on a Linear ticket `{{ issue.identifier }}` in the `kokkAI`
 repository.
+
+Project source-of-truth documents:
+
+- `docs/proposal-brief.md`
+- `docs/prototype-spec.md`
+- `docs/symphony-backlog.md`
 
 {% if attempt %}
 Continuation context:
@@ -78,6 +84,13 @@ Rules:
    and PR feedback sweep are complete.
 7. If the issue moves to `Merging`, open `.codex/skills/land/SKILL.md` and
    follow it.
+8. Before making changes, read the three project source-of-truth documents
+   listed above and align the implementation with them.
+9. Prefer the smallest usable MVP increment over speculative architecture.
+10. Keep all outputs source-grounded and inspectable; avoid turning the product
+    into a generic chat interface.
+11. If the Linear issue conflicts with the prototype spec, follow the issue but
+    record the conflict in `## Codex Workpad`.
 
 Related skills:
 
