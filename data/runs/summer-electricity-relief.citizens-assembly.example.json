@@ -1,0 +1,354 @@
+{
+  "kind": "mode_run",
+  "schema_version": "deliberation.v1",
+  "run_id": "summer-electricity-relief--citizens-assembly",
+  "dossier_id": "summer-electricity-relief",
+  "topic": "猛暑時の低所得世帯向け電気料金支援制度",
+  "mode": "citizens_assembly",
+  "mode_label": "AI Citizens' Assembly",
+  "generated_at": "2026-03-09T17:29:00Z",
+  "generator": {
+    "provider": "mock",
+    "version": "prototype-02",
+    "deterministic": true
+  },
+  "personas_considered": [
+    "persona-senior-renter",
+    "persona-medical-caregiver"
+  ],
+  "briefing": {
+    "headline": "市民モードでは、制度の使いやすさと生活実感に合うかが中心になる。",
+    "summary": "市民側の議論では、対象の厳密さよりも、申請しなくても届くこと、家族事情を説明し直さなくて済むことが強く求められた。",
+    "key_questions": [
+      "窓口へ行かなくても支援を受けられるか",
+      "医療や介護の事情を何度も説明せずに済むか"
+    ],
+    "citation_ids": [
+      "ca-cit-1",
+      "ca-cit-2"
+    ]
+  },
+  "consensus": {
+    "status": "provisional_agreement",
+    "headline": "基本支援は自動で届き、追加支援は紙と電話でも申請できる形が望ましい。",
+    "summary": "市民モードでは、基本支援の自動適用に加え、追加支援が必要な世帯向けにはオフライン手段を残すべきだという暫定合意に達した。",
+    "proposal": "低所得世帯への請求時値引きを基本とし、医療・介護事情のある世帯向けには電話、郵送、地域窓口を含む加算申請ルートを整備する。",
+    "rationale": "生活上の切迫度が高い世帯ほどデジタル申請が難しいため、到達率は手続きの簡素さに大きく左右される。",
+    "citation_ids": [
+      "ca-cit-1",
+      "ca-cit-3",
+      "ca-cit-4"
+    ]
+  },
+  "minority_opinions": [
+    {
+      "id": "minority-universal-base-credit",
+      "title": "少額でも全世帯に一律の基礎支援を入れるべきだ",
+      "summary": "所得判定の境目にある世帯の不満を抑え、ためらわず冷房を使えるよう、少額でも全世帯向けの基礎支援を設けるべきだという意見が残った。",
+      "holders": [
+        "persona-senior-renter"
+      ],
+      "recommendation": "重点給付に加えて、猛暑警戒期間だけ全世帯へ小額の値引きを組み合わせる。",
+      "citation_ids": [
+        "ca-cit-2",
+        "ca-cit-5"
+      ]
+    }
+  ],
+  "contention_points": [
+    {
+      "id": "contention-access-channels",
+      "title": "追加支援の申請導線",
+      "question": "追加支援が必要な世帯に対し、オンライン中心で良いのか、窓口や電話を標準に残すべきか。",
+      "positions": [
+        {
+          "label": "電話・郵送も標準で残す",
+          "summary": "高齢者や介護世帯にはオフライン手段が不可欠だ。",
+          "persona_ids": [
+            "persona-senior-renter",
+            "persona-medical-caregiver"
+          ],
+          "citation_ids": [
+            "ca-cit-3",
+            "ca-cit-4"
+          ]
+        },
+        {
+          "label": "基本はオンラインで補助的に窓口を使う",
+          "summary": "標準導線を絞った方が処理は速いが、十分な伴走支援が前提になる。",
+          "persona_ids": [
+            "persona-medical-caregiver"
+          ],
+          "citation_ids": [
+            "ca-cit-1"
+          ]
+        }
+      ],
+      "citation_ids": [
+        "ca-cit-3",
+        "ca-cit-4"
+      ]
+    },
+    {
+      "id": "contention-universal-floor",
+      "title": "一律の基礎支援の要否",
+      "question": "重点給付だけで十分か、それとも少額の一律支援を組み合わせるべきか。",
+      "positions": [
+        {
+          "label": "重点給付だけでよい",
+          "summary": "限られた予算は高負担世帯に集中した方が効果が大きい。",
+          "persona_ids": [
+            "persona-medical-caregiver"
+          ],
+          "citation_ids": [
+            "ca-cit-1"
+          ]
+        },
+        {
+          "label": "少額の一律支援を加える",
+          "summary": "境目の世帯もためらわず冷房を使える最低限の後押しが必要だ。",
+          "persona_ids": [
+            "persona-senior-renter"
+          ],
+          "citation_ids": [
+            "ca-cit-2",
+            "ca-cit-5"
+          ]
+        }
+      ],
+      "citation_ids": [
+        "ca-cit-2",
+        "ca-cit-5"
+      ]
+    }
+  ],
+  "stakeholder_impacts": [
+    {
+      "id": "impact-older-renters",
+      "stakeholder": "単身高齢者",
+      "impact_level": "high_positive",
+      "summary": "自動適用とオフライン補助がそろえば、制度利用の心理的・実務的負担が大きく下がる。",
+      "benefits": [
+        "窓口へ行かなくても基本支援が届く",
+        "電話や郵送で追加支援を申請できる"
+      ],
+      "risks": [
+        "案内が複雑だと制度を理解できない"
+      ],
+      "citation_ids": [
+        "ca-cit-3"
+      ]
+    },
+    {
+      "id": "impact-caregiving-households",
+      "stakeholder": "在宅医療・介護世帯",
+      "impact_level": "high_positive",
+      "summary": "追加支援が簡単に申請できれば、常時空調を必要とする世帯の不安を減らせる。",
+      "benefits": [
+        "医療や介護に伴う高い電力需要を説明しやすい"
+      ],
+      "risks": [
+        "証明書類の提出が重いと利用をためらう"
+      ],
+      "citation_ids": [
+        "ca-cit-4"
+      ]
+    },
+    {
+      "id": "impact-general-households",
+      "stakeholder": "境目にある一般世帯",
+      "impact_level": "mixed",
+      "summary": "重点給付だけだと不公平感が残るが、少額の一律支援を入れると予算効率は落ちる。",
+      "benefits": [
+        "一律の基礎支援があれば冷房利用をためらいにくい"
+      ],
+      "risks": [
+        "重点給付の原資が薄まる"
+      ],
+      "citation_ids": [
+        "ca-cit-2",
+        "ca-cit-5"
+      ]
+    },
+    {
+      "id": "impact-frontline-support-staff",
+      "stakeholder": "自治体・支援団体の現場職員",
+      "impact_level": "moderate_negative",
+      "summary": "電話や窓口導線を残すと負担は増えるが、取りこぼしを減らす効果がある。",
+      "benefits": [
+        "制度にアクセスしづらい人を補足しやすい"
+      ],
+      "risks": [
+        "問い合わせ対応が猛暑期に集中する"
+      ],
+      "citation_ids": [
+        "ca-cit-3"
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "id": "ca-cit-1",
+      "source_document_id": "meti-energy-whitepaper-2025",
+      "source_chunk_id": "meti-energy-whitepaper-2025-chunk-1",
+      "source_title": "令和7年 エネルギー白書 抜粋",
+      "document_type": "white_paper",
+      "locator": "第2部 3章",
+      "excerpt": "低所得世帯ほど夏季の電気料金上昇が可処分所得に占める比率が高い。",
+      "supports": [
+        {
+          "target_type": "briefing",
+          "target_id": "briefing"
+        },
+        {
+          "target_type": "consensus",
+          "target_id": "consensus"
+        },
+        {
+          "target_type": "contention_point",
+          "target_id": "contention-access-channels"
+        },
+        {
+          "target_type": "contention_point",
+          "target_id": "contention-universal-floor"
+        }
+      ]
+    },
+    {
+      "id": "ca-cit-2",
+      "source_document_id": "diet-budget-2025-06-12",
+      "source_chunk_id": "diet-budget-2025-06-12-chunk-2",
+      "source_title": "第216回国会 予算委員会議録 第7号",
+      "document_type": "diet_minutes",
+      "locator": "p.16",
+      "excerpt": "一律値引きは迅速だが高所得世帯にも恩恵が及び、財政効率が低下するとの指摘があった。",
+      "supports": [
+        {
+          "target_type": "briefing",
+          "target_id": "briefing"
+        },
+        {
+          "target_type": "minority_opinion",
+          "target_id": "minority-universal-base-credit"
+        },
+        {
+          "target_type": "contention_point",
+          "target_id": "contention-universal-floor"
+        },
+        {
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-general-households"
+        }
+      ]
+    },
+    {
+      "id": "ca-cit-3",
+      "source_document_id": "cabinet-public-comment-2025-07",
+      "source_chunk_id": "cabinet-public-comment-2025-07-chunk-1",
+      "source_title": "電気料金支援制度に関する意見募集結果",
+      "document_type": "public_comment",
+      "locator": "意見要約 2",
+      "excerpt": "申請方式は迅速性を損ない、支援を必要とする世帯ほど手続きからこぼれやすいとの懸念が示された。",
+      "supports": [
+        {
+          "target_type": "consensus",
+          "target_id": "consensus"
+        },
+        {
+          "target_type": "contention_point",
+          "target_id": "contention-access-channels"
+        },
+        {
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-older-renters"
+        },
+        {
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-frontline-support-staff"
+        }
+      ]
+    },
+    {
+      "id": "ca-cit-4",
+      "source_document_id": "cabinet-public-comment-2025-07",
+      "source_chunk_id": "cabinet-public-comment-2025-07-chunk-2",
+      "source_title": "電気料金支援制度に関する意見募集結果",
+      "document_type": "public_comment",
+      "locator": "意見要約 4",
+      "excerpt": "通常の所得基準だけでは負担実態を十分に捉えきれないとの意見が複数あった。",
+      "supports": [
+        {
+          "target_type": "consensus",
+          "target_id": "consensus"
+        },
+        {
+          "target_type": "contention_point",
+          "target_id": "contention-access-channels"
+        },
+        {
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-caregiving-households"
+        },
+        {
+          "target_type": "uncertainty_note",
+          "target_id": "uncertainty-offline-capacity"
+        }
+      ]
+    },
+    {
+      "id": "ca-cit-5",
+      "source_document_id": "meti-energy-whitepaper-2025",
+      "source_chunk_id": "meti-energy-whitepaper-2025-chunk-2",
+      "source_title": "令和7年 エネルギー白書 抜粋",
+      "document_type": "white_paper",
+      "locator": "第2部 4章",
+      "excerpt": "高齢者世帯や医療機器利用世帯では一律の節電要請に限界がある。",
+      "supports": [
+        {
+          "target_type": "minority_opinion",
+          "target_id": "minority-universal-base-credit"
+        },
+        {
+          "target_type": "contention_point",
+          "target_id": "contention-universal-floor"
+        },
+        {
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-general-households"
+        }
+      ]
+    }
+  ],
+  "uncertainty_notes": [
+    {
+      "id": "uncertainty-offline-capacity",
+      "summary": "電話・郵送・窓口導線を残した場合の自治体運営負荷の見積もりが不足している。",
+      "reason": "市民モードでは必要性が強く支持されたが、ピーク時の受付能力は別途検証が必要だ。",
+      "citation_ids": [
+        "ca-cit-4"
+      ]
+    }
+  ],
+  "diffable_summary": {
+    "headline": "支援の必要性より、使いやすさと説明のしやすさが重視された。",
+    "agreement_points": [
+      "猛暑期の重点支援は必要",
+      "申請不要の基本支援が望ましい"
+    ],
+    "conflict_points": [
+      "少額の一律支援を併設するか",
+      "追加支援の導線をどこまでオフライン対応にするか"
+    ],
+    "tradeoffs": [
+      "制度の使いやすさと現場負荷",
+      "不公平感の緩和と財政効率"
+    ],
+    "open_questions": [
+      "電話・郵送受付を誰が支えるか",
+      "境目世帯向けの説明をどこまで簡潔にできるか"
+    ],
+    "unstable_claims": [
+      "少額の一律支援を組み合わせても重点給付の効果を保てるか"
+    ]
+  }
+}

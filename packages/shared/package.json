@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/health.js",
-    "./health": "./src/health.js"
+    ".": "./src/index.js",
+    "./deliberation": "./src/deliberation.js",
+    "./health": "./src/health.js",
+    "./schemas/deliberation": "./schemas/deliberation.schema.json"
   }
 }

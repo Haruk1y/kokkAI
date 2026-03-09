@@ -11,9 +11,13 @@ apps/
   api/        Node HTTP API with `/` and `/health`
   web/        Node HTTP web app with `/` and `/health`
 packages/
-  shared/     Shared health schema helpers used by web and API
+  shared/     Shared health helpers and deliberation contract used by web and API
 data/
-  seeds/      Prototype seed data consumed by the API
+  seeds/        Prototype seed data consumed by the API
+  dossiers/     Example dossier payloads for the shared deliberation schema
+  personas/     Example persona registry payloads
+  runs/         Example single-mode deliberation outputs
+  comparisons/  Example cross-mode diff payloads
 docs/
   *.md        Proposal brief, prototype spec, and Symphony backlog
 scripts/      Repo-local dev, lint, format, and smoke-test utilities
@@ -59,11 +63,38 @@ Run syntax and data-file checks:
 npm run lint
 ```
 
+Validate the shared deliberation schema examples:
+
+```bash
+npm run contracts
+```
+
 Run the full validation sweep:
 
 ```bash
 npm run validate
 ```
+
+## Shared Deliberation Contract
+
+`HAR-6` adds the first canonical contract for the prototype comparison flow.
+
+- JSON Schema: `packages/shared/schemas/deliberation.schema.json`
+- Runtime validators: `packages/shared/src/deliberation.js`
+- Example dossier: `data/dossiers/summer-electricity-relief.example.json`
+- Example persona registry: `data/personas/summer-electricity-relief.example.json`
+- Example mode runs: `data/runs/*.example.json`
+- Example comparison: `data/comparisons/summer-electricity-relief.example.json`
+
+The contract covers the fields called out in `docs/prototype-spec.md` for the
+comparison UI: dossier briefing, mode briefing and consensus, minority opinions,
+contention points, stakeholder impacts, citations, uncertainty notes, and
+cross-mode agreement/disagreement summaries.
+
+The root schema now validates any of the four shared payload kinds directly via
+their `kind` discriminator, while the runtime validators also enforce
+cross-reference checks such as citation targets, persona references, and
+comparison claim links.
 
 ## Symphony Workflow
 
