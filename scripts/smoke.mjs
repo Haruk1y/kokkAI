@@ -53,6 +53,14 @@ if (!apiValidation.ok) {
   throw new Error(apiValidation.errors.join('; '));
 }
 
+if (!apiPayload.notes.some((note) => note.includes('Loaded') && note.includes('dossier'))) {
+  throw new Error('API /health did not report dossier loading');
+}
+
+if (!apiPayload.seed?.dossier_ids?.includes('school-lunch-fee-waiver')) {
+  throw new Error('API /health did not include the curated dossier id in the loaded catalog');
+}
+
 const apiRootResponse = await invokeHandler(handleApiRequest, {
   url: '/',
   host: 'localhost:3001',

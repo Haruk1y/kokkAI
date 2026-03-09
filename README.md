@@ -81,7 +81,9 @@ npm run validate
 
 - JSON Schema: `packages/shared/schemas/deliberation.schema.json`
 - Runtime validators: `packages/shared/src/deliberation.js`
+- Repository dossier loader: `packages/shared/src/dossiers.js`
 - Example dossier: `data/dossiers/summer-electricity-relief.example.json`
+- Curated dossier directory: `data/dossiers/school-lunch-fee-waiver/`
 - Example persona registry: `data/personas/summer-electricity-relief.example.json`
 - Example mode runs: `data/runs/*.example.json`
 - Example comparison: `data/comparisons/summer-electricity-relief.example.json`

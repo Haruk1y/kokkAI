@@ -11,6 +11,7 @@ import {
   validateModeRun,
   validatePersonaRegistry,
 } from '../packages/shared/src/deliberation.js';
+import { loadRepositoryDossiers } from '../packages/shared/src/dossiers.js';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 
@@ -47,7 +48,9 @@ function buildRunTargetIndex(run) {
   ]);
 }
 
-const dossier = await readJson('data/dossiers/summer-electricity-relief.example.json');
+const dossiers = await loadRepositoryDossiers();
+const dossiersById = new Map(dossiers.map((dossier) => [dossier.id, dossier]));
+const dossier = dossiersById.get('summer-electricity-relief');
 const personaRegistry = await readJson('data/personas/summer-electricity-relief.example.json');
 const runs = await Promise.all([
   readJson('data/runs/summer-electricity-relief.committee-institution-replay.example.json'),
@@ -56,8 +59,15 @@ const runs = await Promise.all([
 ]);
 const comparison = await readJson('data/comparisons/summer-electricity-relief.example.json');
 
-assertValidation('sample dossier', validateDossier(dossier));
-assertValidation('root schema sample dossier', validateSharedDeliberationPayload(dossier));
+assert(
+  dossiers.length >= 2,
+  'repository should include the sample dossier and at least one curated dossier',
+);
+dossiers.forEach((candidate) => {
+  assertValidation(`dossier ${candidate.id}`, validateDossier(candidate));
+  assertValidation(`root schema dossier ${candidate.id}`, validateSharedDeliberationPayload(candidate));
+});
+assert(dossier, 'sample dossier summer-electricity-relief must exist');
 assertValidation('sample persona registry', validatePersonaRegistry(personaRegistry));
 assertValidation(
   'root schema sample persona registry',
@@ -162,5 +172,5 @@ claimReferenceGroups.flat().forEach((reference) => {
 });
 
 process.stdout.write(
-  'Validated 1 dossier, 1 persona registry, 3 mode runs, and 1 comparison payload against the shared deliberation schema.\n',
+  `Validated ${dossiers.length} dossiers, 1 persona registry, 3 mode runs, and 1 comparison payload against the shared deliberation schema.\n`,
 );

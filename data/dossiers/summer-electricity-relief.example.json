@@ -20,6 +20,8 @@
       "document_type": "diet_minutes",
       "publisher": "参議院",
       "published_at": "2025-06-12",
+      "source_url": "https://example.com/diet-budget-2025-06-12",
+      "retrieved_at": "2026-03-09T17:20:00Z",
       "language": "ja",
       "summary": "猛暑対策としての電気料金支援の対象設定と実施手法に関する質疑。",
       "chunks": [
@@ -28,14 +30,22 @@
           "ordinal": 1,
           "section": "猛暑対策",
           "locator": "p.14",
-          "text": "政府参考人は、猛暑時の電気料金支援は低所得世帯に重点化し、省エネ行動を阻害しない設計と一体で実施すべきだと説明した。"
+          "text": "政府参考人は、猛暑時の電気料金支援は低所得世帯に重点化し、省エネ行動を阻害しない設計と一体で実施すべきだと説明した。",
+          "provenance": {
+            "source_url": "https://example.com/diet-budget-2025-06-12#p14",
+            "retrieved_at": "2026-03-09T17:20:00Z"
+          }
         },
         {
           "id": "diet-budget-2025-06-12-chunk-2",
           "ordinal": 2,
           "section": "給付方式",
           "locator": "p.16",
-          "text": "委員からは、一律値引きは迅速だが高所得世帯にも恩恵が及び、財政効率が低下するとの指摘があった。"
+          "text": "委員からは、一律値引きは迅速だが高所得世帯にも恩恵が及び、財政効率が低下するとの指摘があった。",
+          "provenance": {
+            "source_url": "https://example.com/diet-budget-2025-06-12#p16",
+            "retrieved_at": "2026-03-09T17:20:00Z"
+          }
         }
       ]
     },
@@ -45,6 +55,8 @@
       "document_type": "white_paper",
       "publisher": "経済産業省",
       "published_at": "2025-05-20",
+      "source_url": "https://example.com/meti-energy-whitepaper-2025",
+      "retrieved_at": "2026-03-09T17:20:00Z",
       "language": "ja",
       "summary": "家庭部門の電力需要、猛暑リスク、料金上昇が家計へ与える影響を整理した抜粋。",
       "chunks": [
@@ -53,14 +65,22 @@
           "ordinal": 1,
           "section": "家庭部門の負担",
           "locator": "第2部 3章",
-          "text": "低所得世帯ほど夏季の電気料金上昇が可処分所得に占める比率が高く、健康維持のための冷房利用を抑制しやすい。"
+          "text": "低所得世帯ほど夏季の電気料金上昇が可処分所得に占める比率が高く、健康維持のための冷房利用を抑制しやすい。",
+          "provenance": {
+            "source_url": "https://example.com/meti-energy-whitepaper-2025#part-2-chapter-3",
+            "retrieved_at": "2026-03-09T17:20:00Z"
+          }
         },
         {
           "id": "meti-energy-whitepaper-2025-chunk-2",
           "ordinal": 2,
           "section": "需要抑制",
           "locator": "第2部 4章",
-          "text": "需要抑制策は重要だが、熱中症リスクが高い高齢者世帯や医療機器利用世帯では一律の節電要請に限界がある。"
+          "text": "需要抑制策は重要だが、熱中症リスクが高い高齢者世帯や医療機器利用世帯では一律の節電要請に限界がある。",
+          "provenance": {
+            "source_url": "https://example.com/meti-energy-whitepaper-2025#part-2-chapter-4",
+            "retrieved_at": "2026-03-09T17:20:00Z"
+          }
         }
       ]
     },
@@ -70,6 +90,8 @@
       "document_type": "public_comment",
       "publisher": "内閣府",
       "published_at": "2025-07-01",
+      "source_url": "https://example.com/cabinet-public-comment-2025-07",
+      "retrieved_at": "2026-03-09T17:20:00Z",
       "language": "ja",
       "summary": "申請負担、自治体事務、医療的ケア世帯の捕捉方法に関する意見を要約した結果概要。",
       "chunks": [
@@ -78,14 +100,22 @@
           "ordinal": 1,
           "section": "申請負担",
           "locator": "意見要約 2",
-          "text": "自治体や支援団体からは、所得判定を伴う申請方式は迅速性を損ない、支援を必要とする世帯ほど手続きからこぼれやすいとの懸念が示された。"
+          "text": "自治体や支援団体からは、所得判定を伴う申請方式は迅速性を損ない、支援を必要とする世帯ほど手続きからこぼれやすいとの懸念が示された。",
+          "provenance": {
+            "source_url": "https://example.com/cabinet-public-comment-2025-07#comment-2",
+            "retrieved_at": "2026-03-09T17:20:00Z"
+          }
         },
         {
           "id": "cabinet-public-comment-2025-07-chunk-2",
           "ordinal": 2,
           "section": "高リスク世帯",
           "locator": "意見要約 4",
-          "text": "在宅医療や障害特性により常時空調が必要な世帯については、通常の所得基準だけでは負担実態を十分に捉えきれないとの意見が複数あった。"
+          "text": "在宅医療や障害特性により常時空調が必要な世帯については、通常の所得基準だけでは負担実態を十分に捉えきれないとの意見が複数あった。",
+          "provenance": {
+            "source_url": "https://example.com/cabinet-public-comment-2025-07#comment-4",
+            "retrieved_at": "2026-03-09T17:20:00Z"
+          }
         }
       ]
     }
