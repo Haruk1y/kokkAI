@@ -13,10 +13,11 @@
   "scripts": {
     "dev": "node scripts/dev.mjs",
     "start": "node scripts/dev.mjs",
+    "contracts": "node scripts/contracts.mjs",
     "lint": "node scripts/lint.mjs",
     "format": "node scripts/format.mjs",
     "format:check": "node scripts/format.mjs --check",
     "smoke": "node scripts/smoke.mjs",
-    "validate": "npm run lint && npm run format:check && npm run smoke"
+    "validate": "npm run lint && npm run format:check && npm run contracts && npm run smoke"
   }
 }

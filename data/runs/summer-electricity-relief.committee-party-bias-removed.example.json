@@ -1,0 +1,364 @@
+{
+  "kind": "mode_run",
+  "schema_version": "deliberation.v1",
+  "run_id": "summer-electricity-relief--committee-party-bias-removed",
+  "dossier_id": "summer-electricity-relief",
+  "topic": "猛暑時の低所得世帯向け電気料金支援制度",
+  "mode": "committee_party_bias_removed",
+  "mode_label": "AI Committee (Party Bias Removed)",
+  "generated_at": "2026-03-09T17:27:00Z",
+  "generator": {
+    "provider": "mock",
+    "version": "prototype-02",
+    "deterministic": true
+  },
+  "personas_considered": [
+    "persona-policy-analyst",
+    "persona-social-policy-analyst"
+  ],
+  "briefing": {
+    "headline": "政党都合を外すと、論点は到達率と行政コストの比較に絞られる。",
+    "summary": "党派性を除くと、重点給付そのものへの反対は弱く、対象捕捉率をどこまで上げるために追加コストを許容するかが主な争点になった。",
+    "key_questions": [
+      "既存福祉データと電力契約データをどう接続するか",
+      "所得基準に医療的必要性を組み込むと行政コストはどこまで増えるか"
+    ],
+    "citation_ids": [
+      "pbr-cit-1",
+      "pbr-cit-2"
+    ]
+  },
+  "consensus": {
+    "status": "provisional_agreement",
+    "headline": "基本は自動適用の請求時値引き、補完的に高リスク加算を付ける。",
+    "summary": "最も効率的なのは、既存の低所得世帯データに基づく自動適用を基本とし、医療的必要性が明確な世帯には追加加算を設ける設計だという結論に近づいた。",
+    "proposal": "住民税非課税世帯は電気料金の請求時値引きで自動適用し、在宅医療機器利用世帯には自治体確認済みの加算枠を設定する。",
+    "rationale": "一律支援より財政効率が高く、申請主義より到達率が高い中間解として成立しやすい。",
+    "citation_ids": [
+      "pbr-cit-1",
+      "pbr-cit-3",
+      "pbr-cit-4"
+    ]
+  },
+  "minority_opinions": [
+    {
+      "id": "minority-simple-cash-transfer",
+      "title": "制度複雑化を避けるため現金給付に寄せるべきだ",
+      "summary": "データ連携や小売電気事業者への実装を避け、自治体経由の定額給付にした方が制度変更コストが小さいという少数意見が残った。",
+      "holders": [
+        "persona-policy-analyst"
+      ],
+      "recommendation": "対象世帯へ夏季限定の定額給付を行い、電力請求システムの改修は見送る。",
+      "citation_ids": [
+        "pbr-cit-2",
+        "pbr-cit-5"
+      ]
+    }
+  ],
+  "contention_points": [
+    {
+      "id": "contention-data-linkage",
+      "title": "自動適用のデータ連携",
+      "question": "既存行政データをどこまで使えば高い到達率と低い事務負担を両立できるか。",
+      "positions": [
+        {
+          "label": "既存福祉データを広く使う",
+          "summary": "到達率向上のため、福祉台帳や医療的確認済み情報をできるだけ事前連携する。",
+          "persona_ids": [
+            "persona-social-policy-analyst"
+          ],
+          "citation_ids": [
+            "pbr-cit-3",
+            "pbr-cit-4"
+          ]
+        },
+        {
+          "label": "最小限の自動適用に留める",
+          "summary": "実務負担の増加を抑えるため、まずは非課税世帯への単純適用に限定する。",
+          "persona_ids": [
+            "persona-policy-analyst"
+          ],
+          "citation_ids": [
+            "pbr-cit-1",
+            "pbr-cit-2"
+          ]
+        }
+      ],
+      "citation_ids": [
+        "pbr-cit-3",
+        "pbr-cit-4"
+      ]
+    },
+    {
+      "id": "contention-additional-support",
+      "title": "高リスク加算の範囲",
+      "question": "医療的必要性のある世帯へ加算を設ける場合、どの程度まで個別事情を取り込むべきか。",
+      "positions": [
+        {
+          "label": "明確な基準のある世帯に限定する",
+          "summary": "継続可能性を重視し、確認可能な医療機器利用世帯などに絞る。",
+          "persona_ids": [
+            "persona-policy-analyst"
+          ],
+          "citation_ids": [
+            "pbr-cit-1",
+            "pbr-cit-4"
+          ]
+        },
+        {
+          "label": "広めに柔軟運用する",
+          "summary": "通常の所得基準で拾えないケア負担も加算対象に含める。",
+          "persona_ids": [
+            "persona-social-policy-analyst"
+          ],
+          "citation_ids": [
+            "pbr-cit-4",
+            "pbr-cit-5"
+          ]
+        }
+      ],
+      "citation_ids": [
+        "pbr-cit-4",
+        "pbr-cit-5"
+      ]
+    }
+  ],
+  "stakeholder_impacts": [
+    {
+      "id": "impact-low-income-households",
+      "stakeholder": "低所得世帯",
+      "impact_level": "high_positive",
+      "summary": "自動適用できれば、申請負担を増やさずに夏季の電気料金負担を下げられる。",
+      "benefits": [
+        "制度利用のハードルが低い",
+        "支援到達までの時間差が小さい"
+      ],
+      "risks": [
+        "電力契約情報と世帯情報がずれる場合に漏れが出る"
+      ],
+      "citation_ids": [
+        "pbr-cit-1",
+        "pbr-cit-3"
+      ]
+    },
+    {
+      "id": "impact-medically-vulnerable-households",
+      "stakeholder": "在宅医療・障害特性のある世帯",
+      "impact_level": "high_positive",
+      "summary": "高リスク加算を設ければ、単純な所得基準では捉えにくい電力需要を補える。",
+      "benefits": [
+        "常時空調や医療機器利用に伴う追加負担を反映できる"
+      ],
+      "risks": [
+        "確認方法が複雑になると給付開始が遅れる"
+      ],
+      "citation_ids": [
+        "pbr-cit-4"
+      ]
+    },
+    {
+      "id": "impact-municipalities",
+      "stakeholder": "自治体",
+      "impact_level": "mixed",
+      "summary": "高リスク加算の確認主体となる場合は負担が増えるが、全面申請制よりは軽い。",
+      "benefits": [
+        "個別事情の確認を必要なケースへ限定できる"
+      ],
+      "risks": [
+        "データ確認と説明対応の体制整備が必要"
+      ],
+      "citation_ids": [
+        "pbr-cit-2",
+        "pbr-cit-5"
+      ]
+    },
+    {
+      "id": "impact-power-retailers",
+      "stakeholder": "小売電気事業者",
+      "impact_level": "moderate_negative",
+      "summary": "自動適用の主体になるとシステム改修が必要だが、制度の到達率は上げやすい。",
+      "benefits": [
+        "請求時値引きの導線で支援実感を届けやすい"
+      ],
+      "risks": [
+        "対象判定データの連携と監査対応が発生する"
+      ],
+      "citation_ids": [
+        "pbr-cit-3"
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "id": "pbr-cit-1",
+      "source_document_id": "meti-energy-whitepaper-2025",
+      "source_chunk_id": "meti-energy-whitepaper-2025-chunk-1",
+      "source_title": "令和7年 エネルギー白書 抜粋",
+      "document_type": "white_paper",
+      "locator": "第2部 3章",
+      "excerpt": "低所得世帯ほど夏季の電気料金上昇が可処分所得に占める比率が高い。",
+      "supports": [
+        {
+          "target_type": "briefing",
+          "target_id": "briefing"
+        },
+        {
+          "target_type": "consensus",
+          "target_id": "consensus"
+        },
+        {
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-low-income-households"
+        },
+        {
+          "target_type": "contention_point",
+          "target_id": "contention-data-linkage"
+        },
+        {
+          "target_type": "contention_point",
+          "target_id": "contention-additional-support"
+        }
+      ]
+    },
+    {
+      "id": "pbr-cit-2",
+      "source_document_id": "diet-budget-2025-06-12",
+      "source_chunk_id": "diet-budget-2025-06-12-chunk-2",
+      "source_title": "第216回国会 予算委員会議録 第7号",
+      "document_type": "diet_minutes",
+      "locator": "p.16",
+      "excerpt": "一律値引きは迅速だが高所得世帯にも恩恵が及び、財政効率が低下するとの指摘があった。",
+      "supports": [
+        {
+          "target_type": "briefing",
+          "target_id": "briefing"
+        },
+        {
+          "target_type": "minority_opinion",
+          "target_id": "minority-simple-cash-transfer"
+        },
+        {
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-municipalities"
+        },
+        {
+          "target_type": "contention_point",
+          "target_id": "contention-data-linkage"
+        }
+      ]
+    },
+    {
+      "id": "pbr-cit-3",
+      "source_document_id": "diet-budget-2025-06-12",
+      "source_chunk_id": "diet-budget-2025-06-12-chunk-1",
+      "source_title": "第216回国会 予算委員会議録 第7号",
+      "document_type": "diet_minutes",
+      "locator": "p.14",
+      "excerpt": "低所得世帯に重点化し、省エネ行動を阻害しない設計と一体で実施すべきだ。",
+      "supports": [
+        {
+          "target_type": "consensus",
+          "target_id": "consensus"
+        },
+        {
+          "target_type": "contention_point",
+          "target_id": "contention-data-linkage"
+        },
+        {
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-low-income-households"
+        },
+        {
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-power-retailers"
+        }
+      ]
+    },
+    {
+      "id": "pbr-cit-4",
+      "source_document_id": "cabinet-public-comment-2025-07",
+      "source_chunk_id": "cabinet-public-comment-2025-07-chunk-2",
+      "source_title": "電気料金支援制度に関する意見募集結果",
+      "document_type": "public_comment",
+      "locator": "意見要約 4",
+      "excerpt": "通常の所得基準だけでは負担実態を十分に捉えきれないとの意見が複数あった。",
+      "supports": [
+        {
+          "target_type": "consensus",
+          "target_id": "consensus"
+        },
+        {
+          "target_type": "contention_point",
+          "target_id": "contention-data-linkage"
+        },
+        {
+          "target_type": "contention_point",
+          "target_id": "contention-additional-support"
+        },
+        {
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-medically-vulnerable-households"
+        }
+      ]
+    },
+    {
+      "id": "pbr-cit-5",
+      "source_document_id": "cabinet-public-comment-2025-07",
+      "source_chunk_id": "cabinet-public-comment-2025-07-chunk-1",
+      "source_title": "電気料金支援制度に関する意見募集結果",
+      "document_type": "public_comment",
+      "locator": "意見要約 2",
+      "excerpt": "所得判定を伴う申請方式は迅速性を損ない、支援を必要とする世帯ほど手続きからこぼれやすい。",
+      "supports": [
+        {
+          "target_type": "minority_opinion",
+          "target_id": "minority-simple-cash-transfer"
+        },
+        {
+          "target_type": "contention_point",
+          "target_id": "contention-additional-support"
+        },
+        {
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-municipalities"
+        },
+        {
+          "target_type": "uncertainty_note",
+          "target_id": "uncertainty-linkage-scope"
+        }
+      ]
+    }
+  ],
+  "uncertainty_notes": [
+    {
+      "id": "uncertainty-linkage-scope",
+      "summary": "行政データ連携を広げた場合の法務・運用コストの見積もりがまだ粗い。",
+      "reason": "到達率を上げるほど情報連携の設計が重くなり、夏までに実装できる範囲が読みにくい。",
+      "citation_ids": [
+        "pbr-cit-5"
+      ]
+    }
+  ],
+  "diffable_summary": {
+    "headline": "自動適用を軸にすべきという結論は強いが、連携範囲で揺れが残る。",
+    "agreement_points": [
+      "重点給付の方が一律支援より効率的",
+      "低所得世帯は申請不要の導線を優先すべき"
+    ],
+    "conflict_points": [
+      "行政データ連携をどこまで広げるか",
+      "高リスク加算の基準をどこまで柔軟にするか"
+    ],
+    "tradeoffs": [
+      "高い到達率と実装コストの増加",
+      "標準化しやすい基準と個別事情への対応"
+    ],
+    "open_questions": [
+      "小売電気事業者が受け取る対象判定情報の粒度",
+      "自治体確認が必要な加算対象の範囲"
+    ],
+    "unstable_claims": [
+      "既存行政データだけで医療的必要性を十分に捕捉できるか"
+    ]
+  }
+}

@@ -1,0 +1,1075 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kokkai.dev/schemas/deliberation.schema.json",
+  "title": "kokkAI Shared Deliberation Schema",
+  "description": "Canonical contract for dossiers, persona registries, single-mode runs, and cross-mode comparison payloads.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/dossier"
+    },
+    {
+      "$ref": "#/$defs/persona_registry"
+    },
+    {
+      "$ref": "#/$defs/mode_run"
+    },
+    {
+      "$ref": "#/$defs/comparison"
+    }
+  ],
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "committee_institution_replay",
+        "committee_party_bias_removed",
+        "citizens_assembly"
+      ]
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "diet_minutes",
+        "bill",
+        "hearing_record",
+        "public_comment",
+        "white_paper",
+        "manifesto",
+        "local_government_document",
+        "npo_document",
+        "industry_document",
+        "statistics",
+        "other"
+      ]
+    },
+    "citation_target_type": {
+      "type": "string",
+      "enum": [
+        "briefing",
+        "consensus",
+        "minority_opinion",
+        "contention_point",
+        "stakeholder_impact",
+        "uncertainty_note"
+      ]
+    },
+    "consensus_status": {
+      "type": "string",
+      "enum": [
+        "consensus",
+        "provisional_agreement",
+        "no_consensus"
+      ]
+    },
+    "impact_level": {
+      "type": "string",
+      "enum": [
+        "high_positive",
+        "moderate_positive",
+        "mixed",
+        "moderate_negative",
+        "high_negative"
+      ]
+    },
+    "string_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      }
+    },
+    "citation_id_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      },
+      "minItems": 1
+    },
+    "source_chunk": {
+      "type": "object",
+      "description": "Traceable chunk-level provenance for a source document.",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "ordinal": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "section": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "locator": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "text": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "required": [
+        "id",
+        "ordinal",
+        "section",
+        "locator",
+        "text"
+      ],
+      "additionalProperties": false
+    },
+    "source_document": {
+      "type": "object",
+      "description": "Curated primary-source metadata plus the normalized chunks used for deliberation.",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "title": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "document_type": {
+          "$ref": "#/$defs/document_type"
+        },
+        "publisher": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "published_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "language": {
+          "type": "string",
+          "const": "ja"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "chunks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source_chunk"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "document_type",
+        "publisher",
+        "published_at",
+        "language",
+        "summary",
+        "chunks"
+      ],
+      "additionalProperties": false
+    },
+    "demographics": {
+      "type": "object",
+      "description": "Optional citizen-facing demographics for stakeholder personas.",
+      "properties": {
+        "age_range": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "region": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "occupation": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "income_band": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "household": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "health_context": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "mobility_context": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "persona": {
+      "type": "object",
+      "description": "Inspectable persona definition used by a deliberation mode.",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "name": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "role": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "goals": {
+          "$ref": "#/$defs/string_list"
+        },
+        "constraints": {
+          "$ref": "#/$defs/string_list"
+        },
+        "bias_flags": {
+          "$ref": "#/$defs/string_list"
+        },
+        "demographics": {
+          "$ref": "#/$defs/demographics"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "role",
+        "summary",
+        "goals",
+        "constraints",
+        "bias_flags"
+      ],
+      "additionalProperties": false
+    },
+    "mode_definition": {
+      "type": "object",
+      "description": "Mode-level configuration and the personas available to that mode.",
+      "properties": {
+        "mode": {
+          "$ref": "#/$defs/mode"
+        },
+        "label": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "briefing": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "institutional_constraints": {
+          "$ref": "#/$defs/string_list"
+        },
+        "personas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/persona"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "mode",
+        "label",
+        "briefing",
+        "institutional_constraints",
+        "personas"
+      ],
+      "additionalProperties": false
+    },
+    "briefing_block": {
+      "type": "object",
+      "description": "Short mode-specific briefing for the UI summary card.",
+      "properties": {
+        "headline": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "key_questions": {
+          "$ref": "#/$defs/string_list"
+        },
+        "citation_ids": {
+          "$ref": "#/$defs/citation_id_list"
+        }
+      },
+      "required": [
+        "headline",
+        "summary",
+        "key_questions",
+        "citation_ids"
+      ],
+      "additionalProperties": false
+    },
+    "consensus_block": {
+      "type": "object",
+      "description": "Consensus or provisional agreement for a single run.",
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/consensus_status"
+        },
+        "headline": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "proposal": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "rationale": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "citation_ids": {
+          "$ref": "#/$defs/citation_id_list"
+        }
+      },
+      "required": [
+        "status",
+        "headline",
+        "summary",
+        "proposal",
+        "rationale",
+        "citation_ids"
+      ],
+      "additionalProperties": false
+    },
+    "minority_opinion": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "title": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "holders": {
+          "$ref": "#/$defs/string_list"
+        },
+        "recommendation": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "citation_ids": {
+          "$ref": "#/$defs/citation_id_list"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "summary",
+        "holders",
+        "recommendation",
+        "citation_ids"
+      ],
+      "additionalProperties": false
+    },
+    "contention_position": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "persona_ids": {
+          "$ref": "#/$defs/string_list"
+        },
+        "citation_ids": {
+          "$ref": "#/$defs/citation_id_list"
+        }
+      },
+      "required": [
+        "label",
+        "summary",
+        "persona_ids",
+        "citation_ids"
+      ],
+      "additionalProperties": false
+    },
+    "contention_point": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "title": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "question": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "positions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/contention_position"
+          },
+          "minItems": 2
+        },
+        "citation_ids": {
+          "$ref": "#/$defs/citation_id_list"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "question",
+        "positions",
+        "citation_ids"
+      ],
+      "additionalProperties": false
+    },
+    "stakeholder_impact": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "stakeholder": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "impact_level": {
+          "$ref": "#/$defs/impact_level"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "benefits": {
+          "$ref": "#/$defs/string_list"
+        },
+        "risks": {
+          "$ref": "#/$defs/string_list"
+        },
+        "citation_ids": {
+          "$ref": "#/$defs/citation_id_list"
+        }
+      },
+      "required": [
+        "id",
+        "stakeholder",
+        "impact_level",
+        "summary",
+        "benefits",
+        "risks",
+        "citation_ids"
+      ],
+      "additionalProperties": false
+    },
+    "citation_support": {
+      "type": "object",
+      "properties": {
+        "target_type": {
+          "$ref": "#/$defs/citation_target_type"
+        },
+        "target_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "required": [
+        "target_type",
+        "target_id"
+      ],
+      "additionalProperties": false
+    },
+    "citation": {
+      "type": "object",
+      "description": "Evidence reference back to a normalized source chunk.",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_document_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_chunk_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_title": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "document_type": {
+          "$ref": "#/$defs/document_type"
+        },
+        "locator": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "excerpt": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "supports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/citation_support"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id",
+        "source_document_id",
+        "source_chunk_id",
+        "source_title",
+        "document_type",
+        "locator",
+        "excerpt",
+        "supports"
+      ],
+      "additionalProperties": false
+    },
+    "uncertainty_note": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "reason": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "citation_ids": {
+          "$ref": "#/$defs/citation_id_list"
+        }
+      },
+      "required": [
+        "id",
+        "summary",
+        "reason",
+        "citation_ids"
+      ],
+      "additionalProperties": false
+    },
+    "diffable_summary": {
+      "type": "object",
+      "description": "Compressed fields intended for deterministic cross-mode diffing.",
+      "properties": {
+        "headline": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "agreement_points": {
+          "$ref": "#/$defs/string_list"
+        },
+        "conflict_points": {
+          "$ref": "#/$defs/string_list"
+        },
+        "tradeoffs": {
+          "$ref": "#/$defs/string_list"
+        },
+        "open_questions": {
+          "$ref": "#/$defs/string_list"
+        },
+        "unstable_claims": {
+          "$ref": "#/$defs/string_list"
+        }
+      },
+      "required": [
+        "headline",
+        "agreement_points",
+        "conflict_points",
+        "tradeoffs",
+        "open_questions",
+        "unstable_claims"
+      ],
+      "additionalProperties": false
+    },
+    "generator": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "deterministic": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "provider",
+        "version",
+        "deterministic"
+      ],
+      "additionalProperties": false
+    },
+    "claim_reference": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "$ref": "#/$defs/mode"
+        },
+        "target_type": {
+          "$ref": "#/$defs/citation_target_type"
+        },
+        "target_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "citation_ids": {
+          "$ref": "#/$defs/citation_id_list"
+        }
+      },
+      "required": [
+        "mode",
+        "target_type",
+        "target_id",
+        "citation_ids"
+      ],
+      "additionalProperties": false
+    },
+    "mode_summary": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "$ref": "#/$defs/mode"
+        },
+        "label": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "run_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "consensus_status": {
+          "$ref": "#/$defs/consensus_status"
+        },
+        "consensus_headline": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "primary_tradeoff": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "notable_stakeholders": {
+          "$ref": "#/$defs/string_list"
+        }
+      },
+      "required": [
+        "mode",
+        "label",
+        "run_id",
+        "consensus_status",
+        "consensus_headline",
+        "primary_tradeoff",
+        "notable_stakeholders"
+      ],
+      "additionalProperties": false
+    },
+    "agreement_point": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "title": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "modes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mode"
+          },
+          "minItems": 2
+        },
+        "claim_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/claim_reference"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "summary",
+        "modes",
+        "claim_refs"
+      ],
+      "additionalProperties": false
+    },
+    "mode_position": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "$ref": "#/$defs/mode"
+        },
+        "stance_label": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "target_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "required": [
+        "mode",
+        "stance_label",
+        "summary",
+        "target_id"
+      ],
+      "additionalProperties": false
+    },
+    "disagreement_point": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "title": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "question": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "mode_positions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mode_position"
+          },
+          "minItems": 2
+        },
+        "affected_stakeholders": {
+          "$ref": "#/$defs/string_list"
+        },
+        "claim_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/claim_reference"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "question",
+        "mode_positions",
+        "affected_stakeholders",
+        "claim_refs"
+      ],
+      "additionalProperties": false
+    },
+    "unstable_point": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "reason": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "modes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mode"
+          },
+          "minItems": 2
+        },
+        "claim_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/claim_reference"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id",
+        "summary",
+        "reason",
+        "modes",
+        "claim_refs"
+      ],
+      "additionalProperties": false
+    },
+    "comparison_takeaway": {
+      "type": "object",
+      "properties": {
+        "headline": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "required": [
+        "headline",
+        "summary"
+      ],
+      "additionalProperties": false
+    },
+    "dossier": {
+      "type": "object",
+      "description": "Repository-backed policy dossier with normalized source chunks.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "dossier"
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "deliberation.v1"
+        },
+        "id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "slug": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "title": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "topic": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "briefing": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "jurisdiction": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "comparison_focus": {
+          "$ref": "#/$defs/string_list"
+        },
+        "source_documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source_document"
+          },
+          "minItems": 1
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "kind",
+        "schema_version",
+        "id",
+        "slug",
+        "title",
+        "topic",
+        "summary",
+        "briefing",
+        "jurisdiction",
+        "comparison_focus",
+        "source_documents",
+        "updated_at"
+      ],
+      "additionalProperties": false
+    },
+    "persona_registry": {
+      "type": "object",
+      "description": "Registry of mode configuration and the personas participating in each mode.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "persona_registry"
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "deliberation.v1"
+        },
+        "dossier_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "topic": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "modes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mode_definition"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        }
+      },
+      "required": [
+        "kind",
+        "schema_version",
+        "dossier_id",
+        "topic",
+        "modes"
+      ],
+      "additionalProperties": false
+    },
+    "mode_run": {
+      "type": "object",
+      "description": "Structured output from one deliberation mode run.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "mode_run"
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "deliberation.v1"
+        },
+        "run_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "dossier_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "topic": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "mode": {
+          "$ref": "#/$defs/mode"
+        },
+        "mode_label": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "generator": {
+          "$ref": "#/$defs/generator"
+        },
+        "personas_considered": {
+          "$ref": "#/$defs/string_list"
+        },
+        "briefing": {
+          "$ref": "#/$defs/briefing_block"
+        },
+        "consensus": {
+          "$ref": "#/$defs/consensus_block"
+        },
+        "minority_opinions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/minority_opinion"
+          },
+          "minItems": 1
+        },
+        "contention_points": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/contention_point"
+          },
+          "minItems": 1
+        },
+        "stakeholder_impacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/stakeholder_impact"
+          },
+          "minItems": 1
+        },
+        "citations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/citation"
+          },
+          "minItems": 1
+        },
+        "uncertainty_notes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/uncertainty_note"
+          },
+          "minItems": 1
+        },
+        "diffable_summary": {
+          "$ref": "#/$defs/diffable_summary"
+        }
+      },
+      "required": [
+        "kind",
+        "schema_version",
+        "run_id",
+        "dossier_id",
+        "topic",
+        "mode",
+        "mode_label",
+        "generated_at",
+        "generator",
+        "personas_considered",
+        "briefing",
+        "consensus",
+        "minority_opinions",
+        "contention_points",
+        "stakeholder_impacts",
+        "citations",
+        "uncertainty_notes",
+        "diffable_summary"
+      ],
+      "additionalProperties": false
+    },
+    "comparison": {
+      "type": "object",
+      "description": "Cross-mode comparison contract used by the UI to explain agreement, disagreement, and instability.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "comparison"
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "deliberation.v1"
+        },
+        "dossier_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "topic": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "mode_summaries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mode_summary"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "agreements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/agreement_point"
+          },
+          "minItems": 1
+        },
+        "disagreements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/disagreement_point"
+          },
+          "minItems": 1
+        },
+        "unstable_points": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unstable_point"
+          },
+          "minItems": 1
+        },
+        "comparison_takeaway": {
+          "$ref": "#/$defs/comparison_takeaway"
+        }
+      },
+      "required": [
+        "kind",
+        "schema_version",
+        "dossier_id",
+        "topic",
+        "generated_at",
+        "mode_summaries",
+        "agreements",
+        "disagreements",
+        "unstable_points",
+        "comparison_takeaway"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

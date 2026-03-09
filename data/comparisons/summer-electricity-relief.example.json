@@ -1,0 +1,286 @@
+{
+  "kind": "comparison",
+  "schema_version": "deliberation.v1",
+  "dossier_id": "summer-electricity-relief",
+  "topic": "猛暑時の低所得世帯向け電気料金支援制度",
+  "generated_at": "2026-03-09T17:31:00Z",
+  "mode_summaries": [
+    {
+      "mode": "committee_institution_replay",
+      "label": "AI Committee (Institution Replay)",
+      "run_id": "summer-electricity-relief--committee-institution-replay",
+      "consensus_status": "provisional_agreement",
+      "consensus_headline": "住民税非課税世帯を軸にした期間限定支援なら前に進められる。",
+      "primary_tradeoff": "財政規律を保ちながら高リスク世帯をどう追加で捕捉するか",
+      "notable_stakeholders": [
+        "低所得世帯",
+        "自治体",
+        "小売電気事業者"
+      ]
+    },
+    {
+      "mode": "committee_party_bias_removed",
+      "label": "AI Committee (Party Bias Removed)",
+      "run_id": "summer-electricity-relief--committee-party-bias-removed",
+      "consensus_status": "provisional_agreement",
+      "consensus_headline": "基本は自動適用の請求時値引き、補完的に高リスク加算を付ける。",
+      "primary_tradeoff": "到達率を上げるデータ連携と実装コストの増加",
+      "notable_stakeholders": [
+        "低所得世帯",
+        "在宅医療・障害特性のある世帯",
+        "小売電気事業者"
+      ]
+    },
+    {
+      "mode": "citizens_assembly",
+      "label": "AI Citizens' Assembly",
+      "run_id": "summer-electricity-relief--citizens-assembly",
+      "consensus_status": "provisional_agreement",
+      "consensus_headline": "基本支援は自動で届き、追加支援は紙と電話でも申請できる形が望ましい。",
+      "primary_tradeoff": "使いやすい手続きと現場運営負荷の増加",
+      "notable_stakeholders": [
+        "単身高齢者",
+        "在宅医療・介護世帯",
+        "自治体・支援団体の現場職員"
+      ]
+    }
+  ],
+  "agreements": [
+    {
+      "id": "agreement-targeted-relief",
+      "title": "猛暑期の重点支援は必要",
+      "summary": "三つのモードすべてで、猛暑期に限定した重点給付は必要であり、一律支援より優先すべきだという認識が共有された。",
+      "modes": [
+        "committee_institution_replay",
+        "committee_party_bias_removed",
+        "citizens_assembly"
+      ],
+      "claim_refs": [
+        {
+          "mode": "committee_institution_replay",
+          "target_type": "consensus",
+          "target_id": "consensus",
+          "citation_ids": [
+            "cir-cit-1",
+            "cir-cit-3"
+          ]
+        },
+        {
+          "mode": "committee_party_bias_removed",
+          "target_type": "consensus",
+          "target_id": "consensus",
+          "citation_ids": [
+            "pbr-cit-1",
+            "pbr-cit-3"
+          ]
+        },
+        {
+          "mode": "citizens_assembly",
+          "target_type": "consensus",
+          "target_id": "consensus",
+          "citation_ids": [
+            "ca-cit-1",
+            "ca-cit-3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "agreement-high-risk-households",
+      "title": "高リスク世帯への追加配慮が必要",
+      "summary": "医療機器利用世帯や介護世帯など、通常の所得基準だけでは負担を捉えにくい層には追加配慮が必要だという点でも一致した。",
+      "modes": [
+        "committee_institution_replay",
+        "committee_party_bias_removed",
+        "citizens_assembly"
+      ],
+      "claim_refs": [
+        {
+          "mode": "committee_institution_replay",
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-medically-vulnerable-households",
+          "citation_ids": [
+            "cir-cit-5"
+          ]
+        },
+        {
+          "mode": "committee_party_bias_removed",
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-medically-vulnerable-households",
+          "citation_ids": [
+            "pbr-cit-4"
+          ]
+        },
+        {
+          "mode": "citizens_assembly",
+          "target_type": "stakeholder_impact",
+          "target_id": "impact-caregiving-households",
+          "citation_ids": [
+            "ca-cit-4"
+          ]
+        }
+      ]
+    }
+  ],
+  "disagreements": [
+    {
+      "id": "disagreement-delivery-channel",
+      "title": "追加支援の届け方",
+      "question": "追加支援は限定的な自治体申請でよいのか、それとも電話・郵送を含む厚いオフライン導線を標準にすべきか。",
+      "mode_positions": [
+        {
+          "mode": "committee_institution_replay",
+          "stance_label": "限定的な自治体申請を併設",
+          "summary": "政治的な説明責任と事務負担の均衡から、基本は請求時値引き、追加支援だけ自治体申請とする。",
+          "target_id": "contention-delivery"
+        },
+        {
+          "mode": "committee_party_bias_removed",
+          "stance_label": "自動適用を最大化し、確認主体を絞る",
+          "summary": "行政コストを抑えるため、自治体確認は高リスク加算に限定する。",
+          "target_id": "contention-data-linkage"
+        },
+        {
+          "mode": "citizens_assembly",
+          "stance_label": "電話・郵送・窓口を標準で残す",
+          "summary": "生活上切迫した世帯ほどオンラインだけでは届かないため、オフライン導線が必要だ。",
+          "target_id": "contention-access-channels"
+        }
+      ],
+      "affected_stakeholders": [
+        "自治体",
+        "単身高齢者",
+        "在宅医療・介護世帯"
+      ],
+      "claim_refs": [
+        {
+          "mode": "committee_institution_replay",
+          "target_type": "contention_point",
+          "target_id": "contention-delivery",
+          "citation_ids": [
+            "cir-cit-3",
+            "cir-cit-4"
+          ]
+        },
+        {
+          "mode": "committee_party_bias_removed",
+          "target_type": "contention_point",
+          "target_id": "contention-data-linkage",
+          "citation_ids": [
+            "pbr-cit-3",
+            "pbr-cit-4"
+          ]
+        },
+        {
+          "mode": "citizens_assembly",
+          "target_type": "contention_point",
+          "target_id": "contention-access-channels",
+          "citation_ids": [
+            "ca-cit-3",
+            "ca-cit-4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "disagreement-universal-floor",
+      "title": "少額の一律支援を併設するか",
+      "question": "重点給付に加えて、境目世帯向けの少額な一律支援を組み合わせるべきか。",
+      "mode_positions": [
+        {
+          "mode": "committee_institution_replay",
+          "stance_label": "基本は不要",
+          "summary": "財政効率を優先し、一律支援は避けるべきとみる。",
+          "target_id": "contention-targeting"
+        },
+        {
+          "mode": "committee_party_bias_removed",
+          "stance_label": "制度複雑化を避ける",
+          "summary": "一律支援を足すより、高リスク加算に予算を回すべきとみる。",
+          "target_id": "contention-additional-support"
+        },
+        {
+          "mode": "citizens_assembly",
+          "stance_label": "少額なら検討余地あり",
+          "summary": "境目の世帯が冷房利用をためらわないための基礎支援を求める声が残る。",
+          "target_id": "contention-universal-floor"
+        }
+      ],
+      "affected_stakeholders": [
+        "境目にある一般世帯",
+        "低所得世帯"
+      ],
+      "claim_refs": [
+        {
+          "mode": "committee_institution_replay",
+          "target_type": "contention_point",
+          "target_id": "contention-targeting",
+          "citation_ids": [
+            "cir-cit-2",
+            "cir-cit-3"
+          ]
+        },
+        {
+          "mode": "committee_party_bias_removed",
+          "target_type": "contention_point",
+          "target_id": "contention-additional-support",
+          "citation_ids": [
+            "pbr-cit-4",
+            "pbr-cit-5"
+          ]
+        },
+        {
+          "mode": "citizens_assembly",
+          "target_type": "minority_opinion",
+          "target_id": "minority-universal-base-credit",
+          "citation_ids": [
+            "ca-cit-2",
+            "ca-cit-5"
+          ]
+        }
+      ]
+    }
+  ],
+  "unstable_points": [
+    {
+      "id": "unstable-high-risk-identification",
+      "summary": "高リスク世帯を自動でどこまで捕捉できるかは、どのモードでも確信が弱い。",
+      "reason": "制度必要性には一致がある一方、利用可能な行政データ、申請補完導線、自治体運営能力の前提がそろっていない。",
+      "modes": [
+        "committee_institution_replay",
+        "committee_party_bias_removed",
+        "citizens_assembly"
+      ],
+      "claim_refs": [
+        {
+          "mode": "committee_institution_replay",
+          "target_type": "uncertainty_note",
+          "target_id": "uncertainty-auto-enrollment-data",
+          "citation_ids": [
+            "cir-cit-5"
+          ]
+        },
+        {
+          "mode": "committee_party_bias_removed",
+          "target_type": "uncertainty_note",
+          "target_id": "uncertainty-linkage-scope",
+          "citation_ids": [
+            "pbr-cit-5"
+          ]
+        },
+        {
+          "mode": "citizens_assembly",
+          "target_type": "uncertainty_note",
+          "target_id": "uncertainty-offline-capacity",
+          "citation_ids": [
+            "ca-cit-4"
+          ]
+        }
+      ]
+    }
+  ],
+  "comparison_takeaway": {
+    "headline": "重点給付の必要性は安定しているが、追加支援の運び方は制度目的によって揺れる。",
+    "summary": "制度側のモードほど予算規律と実装可能性を重視し、市民モードほどアクセスのしやすさを優先した。結果として、支援対象の追加基準と申請導線が主要な差分として残った。"
+  }
+}
