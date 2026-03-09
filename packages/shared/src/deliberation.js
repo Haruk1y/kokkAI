@@ -10,6 +10,23 @@ export const DELIBERATION_MODES = Object.freeze([
   'committee_party_bias_removed',
   'citizens_assembly',
 ]);
+export const MODE_CONFIGURATION_EXPECTATIONS = Object.freeze({
+  committee_institution_replay: Object.freeze({
+    persona_source: 'institutional_roles',
+    party_bias: 'preserved',
+    seat_count_influence: 'preserved',
+  }),
+  committee_party_bias_removed: Object.freeze({
+    persona_source: 'policy_tradeoff_roles',
+    party_bias: 'removed',
+    seat_count_influence: 'removed',
+  }),
+  citizens_assembly: Object.freeze({
+    persona_source: 'citizen_stakeholders',
+    party_bias: 'not_applicable',
+    seat_count_influence: 'not_applicable',
+  }),
+});
 
 export const COMPARISON_UI_REQUIRED_FIELDS = Object.freeze({
   dossier: Object.freeze([
@@ -49,6 +66,25 @@ const schemaRefs = Object.freeze({
   modeRun: '#/$defs/mode_run',
   comparison: '#/$defs/comparison',
 });
+const MIN_PERSONA_GOAL_COUNT = 2;
+const MIN_PERSONA_CONSTRAINT_COUNT = 2;
+const MIN_CITIZEN_PERSONA_COUNT = 3;
+const REQUIRED_CITIZEN_DEMOGRAPHIC_FIELDS = Object.freeze([
+  'age_range',
+  'region',
+  'occupation',
+  'income_band',
+  'household',
+  'health_context',
+  'mobility_context',
+]);
+const CITIZEN_DIVERSITY_FIELDS = Object.freeze([
+  'age_range',
+  'region',
+  'occupation',
+  'income_band',
+  'household',
+]);
 
 function definitionFromPointer(pointer) {
   return pointer
@@ -85,6 +121,105 @@ function validateRequiredRefs(ids, validIds, path, errors) {
       errors.push(`${path} references unknown id "${id}"`);
     }
   }
+}
+
+function validateMinimumListLength(values, minimum, path, errors, label) {
+  const size = Array.isArray(values) ? values.length : 0;
+
+  if (size < minimum) {
+    errors.push(`${path} must include at least ${minimum} ${label}`);
+  }
+}
+
+function validateModeConfiguration(modeDefinition, path, errors) {
+  const expected = MODE_CONFIGURATION_EXPECTATIONS[modeDefinition.mode];
+  const configuration =
+    modeDefinition.configuration && typeof modeDefinition.configuration === 'object'
+      ? modeDefinition.configuration
+      : null;
+
+  if (!expected) {
+    errors.push(`${path}.mode references unsupported mode "${modeDefinition.mode}"`);
+    return;
+  }
+
+  if (!configuration) {
+    errors.push(`${path}.configuration is required`);
+    return;
+  }
+
+  Object.entries(expected).forEach(([key, value]) => {
+    if (configuration[key] !== value) {
+      errors.push(
+        `${path}.configuration.${key} must be "${value}" for mode "${modeDefinition.mode}"`,
+      );
+    }
+  });
+
+  validateMinimumListLength(
+    configuration.primary_objectives,
+    2,
+    `${path}.configuration.primary_objectives`,
+    errors,
+    'primary objectives',
+  );
+  validateMinimumListLength(
+    configuration.evidence_lens,
+    2,
+    `${path}.configuration.evidence_lens`,
+    errors,
+    'evidence lenses',
+  );
+}
+
+function validateCitizenAssemblyDiversity(modeDefinition, path, errors) {
+  const personas = Array.isArray(modeDefinition.personas) ? modeDefinition.personas : [];
+
+  validateMinimumListLength(
+    personas,
+    MIN_CITIZEN_PERSONA_COUNT,
+    `${path}.personas`,
+    errors,
+    'citizen personas',
+  );
+
+  const diversityValues = new Map(
+    CITIZEN_DIVERSITY_FIELDS.map((field) => [field, new Set()]),
+  );
+
+  personas.forEach((persona, personaIndex) => {
+    const personaPath = `${path}.personas[${personaIndex}]`;
+
+    if (!persona.bias_flags.includes('citizen_lived_experience')) {
+      errors.push(`${personaPath}.bias_flags must include "citizen_lived_experience"`);
+    }
+
+    if (!persona.demographics) {
+      errors.push(`${personaPath}.demographics is required for citizens_assembly personas`);
+      return;
+    }
+
+    REQUIRED_CITIZEN_DEMOGRAPHIC_FIELDS.forEach((field) => {
+      const value = persona.demographics[field];
+
+      if (!value) {
+        errors.push(`${personaPath}.demographics.${field} is required`);
+        return;
+      }
+
+      if (diversityValues.has(field)) {
+        diversityValues.get(field).add(value);
+      }
+    });
+  });
+
+  diversityValues.forEach((values, field) => {
+    if (values.size < 2) {
+      errors.push(
+        `${path}.personas must express stakeholder diversity across demographics.${field}`,
+      );
+    }
+  });
 }
 
 function buildModeRunTargetIndex(run) {
@@ -126,13 +261,48 @@ function validateDossierSemantics(dossier) {
 
 function validatePersonaRegistrySemantics(registry) {
   const errors = [];
-  const modes = registry.modes.map((definition) => definition.mode);
-  const personaIds = registry.modes.flatMap((definition) =>
-    definition.personas.map((persona) => persona.id),
+  const modeDefinitions = Array.isArray(registry.modes) ? registry.modes : [];
+  const modes = modeDefinitions.map((definition) => definition.mode);
+  const personaIds = modeDefinitions.flatMap((definition) =>
+    Array.isArray(definition.personas)
+      ? definition.personas.map((persona) => persona.id)
+      : [],
   );
 
   validateUniqueStrings(modes, '$.modes', errors);
   validateUniqueStrings(personaIds, '$.modes[*].personas', errors);
+
+  if (modes.length !== DELIBERATION_MODES.length || !DELIBERATION_MODES.every((mode) => modes.includes(mode))) {
+    errors.push('$.modes must cover all three MVP deliberation modes exactly once');
+  }
+
+  modeDefinitions.forEach((definition, definitionIndex) => {
+    const definitionPath = `$.modes[${definitionIndex}]`;
+    const personas = Array.isArray(definition.personas) ? definition.personas : [];
+
+    validateModeConfiguration(definition, definitionPath, errors);
+
+    personas.forEach((persona, personaIndex) => {
+      validateMinimumListLength(
+        persona.goals,
+        MIN_PERSONA_GOAL_COUNT,
+        `${definitionPath}.personas[${personaIndex}].goals`,
+        errors,
+        'goals',
+      );
+      validateMinimumListLength(
+        persona.constraints,
+        MIN_PERSONA_CONSTRAINT_COUNT,
+        `${definitionPath}.personas[${personaIndex}].constraints`,
+        errors,
+        'constraints',
+      );
+    });
+
+    if (definition.mode === 'citizens_assembly') {
+      validateCitizenAssemblyDiversity(definition, definitionPath, errors);
+    }
+  });
 
   return {
     ok: errors.length === 0,

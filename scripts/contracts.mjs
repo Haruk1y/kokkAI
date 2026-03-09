@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import {
   COMPARISON_UI_REQUIRED_FIELDS,
   DELIBERATION_MODES,
+  MODE_CONFIGURATION_EXPECTATIONS,
   validateSharedDeliberationPayload,
   validateComparison,
   validateDossier,
@@ -12,6 +13,10 @@ import {
   validatePersonaRegistry,
 } from '../packages/shared/src/deliberation.js';
 import { loadRepositoryDossiers } from '../packages/shared/src/dossiers.js';
+import {
+  buildPersonaRegistrySummary,
+  loadRepositoryPersonaRegistries,
+} from '../packages/shared/src/personas.js';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 
@@ -51,7 +56,9 @@ function buildRunTargetIndex(run) {
 const dossiers = await loadRepositoryDossiers();
 const dossiersById = new Map(dossiers.map((dossier) => [dossier.id, dossier]));
 const dossier = dossiersById.get('summer-electricity-relief');
-const personaRegistry = await readJson('data/personas/summer-electricity-relief.example.json');
+const personaRegistries = await loadRepositoryPersonaRegistries();
+const personaRegistry =
+  personaRegistries.find((candidate) => candidate.dossier_id === 'summer-electricity-relief') ?? null;
 const runs = await Promise.all([
   readJson('data/runs/summer-electricity-relief.committee-institution-replay.example.json'),
   readJson('data/runs/summer-electricity-relief.committee-party-bias-removed.example.json'),
@@ -67,7 +74,9 @@ dossiers.forEach((candidate) => {
   assertValidation(`dossier ${candidate.id}`, validateDossier(candidate));
   assertValidation(`root schema dossier ${candidate.id}`, validateSharedDeliberationPayload(candidate));
 });
+assert(personaRegistries.length >= 1, 'repository should include at least one persona registry');
 assert(dossier, 'sample dossier summer-electricity-relief must exist');
+assert(personaRegistry, 'sample persona registry summer-electricity-relief must exist');
 assertValidation('sample persona registry', validatePersonaRegistry(personaRegistry));
 assertValidation(
   'root schema sample persona registry',
@@ -94,6 +103,10 @@ assertRequiredFields(
 
 assert(personaRegistry.dossier_id === dossier.id, 'persona registry dossier_id must match the dossier id');
 assert(comparison.dossier_id === dossier.id, 'comparison dossier_id must match the dossier id');
+assert(
+  personaRegistries.every((registry) => dossiersById.has(registry.dossier_id)),
+  'every persona registry dossier_id must reference a repository dossier',
+);
 
 const sourceDocuments = new Map(
   dossier.source_documents.map((document) => [
@@ -107,11 +120,57 @@ const personasByMode = new Map(
     new Set(modeDefinition.personas.map((persona) => persona.id)),
   ]),
 );
+const personaSummary = buildPersonaRegistrySummary(personaRegistry);
 const runsByMode = new Map(runs.map((run) => [run.mode, run]));
 
 assert(
   DELIBERATION_MODES.every((mode) => runsByMode.has(mode)),
   'sample payloads must include one run for each MVP deliberation mode',
+);
+assert(
+  personaSummary.mode_count === DELIBERATION_MODES.length,
+  'persona registry summary must enumerate all three MVP deliberation modes',
+);
+
+const institutionReplayMode = personaRegistry.modes.find(
+  (modeDefinition) => modeDefinition.mode === 'committee_institution_replay',
+);
+const partyRemovedMode = personaRegistry.modes.find(
+  (modeDefinition) => modeDefinition.mode === 'committee_party_bias_removed',
+);
+const citizensAssemblyMode = personaRegistry.modes.find(
+  (modeDefinition) => modeDefinition.mode === 'citizens_assembly',
+);
+
+assert(institutionReplayMode, 'persona registry must define committee_institution_replay');
+assert(partyRemovedMode, 'persona registry must define committee_party_bias_removed');
+assert(citizensAssemblyMode, 'persona registry must define citizens_assembly');
+
+Object.entries(MODE_CONFIGURATION_EXPECTATIONS).forEach(([mode, expectedConfiguration]) => {
+  const definition = personaRegistry.modes.find((candidate) => candidate.mode === mode);
+
+  assert(definition, `persona registry must define ${mode}`);
+
+  Object.entries(expectedConfiguration).forEach(([key, value]) => {
+    assert(
+      definition.configuration[key] === value,
+      `${mode} configuration.${key} must equal ${value}`,
+    );
+  });
+});
+
+assert(
+  JSON.stringify(institutionReplayMode.configuration) !==
+    JSON.stringify(partyRemovedMode.configuration),
+  'party-preserving and party-removed modes must differ in configuration',
+);
+assert(
+  citizensAssemblyMode.personas.length >= 3,
+  'citizens assembly mode must include at least three personas',
+);
+assert(
+  citizensAssemblyMode.personas.every((persona) => persona.demographics),
+  'citizens assembly personas must include demographics to express stakeholder diversity',
 );
 
 runs.forEach((run) => {
@@ -172,5 +231,5 @@ claimReferenceGroups.flat().forEach((reference) => {
 });
 
 process.stdout.write(
-  `Validated ${dossiers.length} dossiers, 1 persona registry, 3 mode runs, and 1 comparison payload against the shared deliberation schema.\n`,
+  `Validated ${dossiers.length} dossiers, ${personaRegistries.length} persona registries, 3 mode runs, and 1 comparison payload against the shared deliberation schema.\n`,
 );

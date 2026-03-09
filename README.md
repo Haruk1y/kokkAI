@@ -48,6 +48,8 @@ Entry points:
 - Web health page: `http://localhost:3000/health`
 - API: `http://localhost:3001/`
 - API health route: `http://localhost:3001/health`
+- Persona registry catalog: `http://localhost:3001/personas`
+- Persona registry by dossier id: `http://localhost:3001/personas/summer-electricity-relief`
 
 ## Quality Gates
 
@@ -82,6 +84,7 @@ npm run validate
 - JSON Schema: `packages/shared/schemas/deliberation.schema.json`
 - Runtime validators: `packages/shared/src/deliberation.js`
 - Repository dossier loader: `packages/shared/src/dossiers.js`
+- Repository persona loader: `packages/shared/src/personas.js`
 - Example dossier: `data/dossiers/summer-electricity-relief.example.json`
 - Curated dossier directory: `data/dossiers/school-lunch-fee-waiver/`
 - Example persona registry: `data/personas/summer-electricity-relief.example.json`
@@ -92,6 +95,12 @@ The contract covers the fields called out in `docs/prototype-spec.md` for the
 comparison UI: dossier briefing, mode briefing and consensus, minority opinions,
 contention points, stakeholder impacts, citations, uncertainty notes, and
 cross-mode agreement/disagreement summaries.
+
+`HAR-8` extends the persona registry so each mode has explicit inspectable
+configuration for persona source, party-bias handling, seat-count handling,
+primary objectives, and evidence lenses. The API now exposes a registry catalog
+that enumerates personas for each mode and a dossier-specific registry route the
+backend can consume directly.
 
 The root schema now validates any of the four shared payload kinds directly via
 their `kind` discriminator, while the runtime validators also enforce

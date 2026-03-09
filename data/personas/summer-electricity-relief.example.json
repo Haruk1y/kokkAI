@@ -8,6 +8,21 @@
       "mode": "committee_institution_replay",
       "label": "AI Committee (Institution Replay)",
       "briefing": "現行の政党配置と行政実務を保ったまま、予算制約と制度執行可能性を含めて議論する。",
+      "configuration": {
+        "persona_source": "institutional_roles",
+        "party_bias": "preserved",
+        "seat_count_influence": "preserved",
+        "primary_objectives": [
+          "政党間の立場差を保ったまま制度修正余地を探る",
+          "補正予算と自治体執行の現実性を崩さない",
+          "与野党と行政の責任分担が見える論点整理を残す"
+        ],
+        "evidence_lens": [
+          "補正予算の説明可能性",
+          "自治体と電力会社の執行負担",
+          "政党公約との整合性"
+        ]
+      },
       "institutional_constraints": [
         "政党の既存公約と支持基盤を意識する",
         "補正予算の成立時期と自治体執行能力を重視する"
@@ -48,6 +63,24 @@
             "opposition_scrutiny",
             "equity_focus"
           ]
+        },
+        {
+          "id": "persona-ministry-official",
+          "name": "制度執行担当官",
+          "role": "行政実務担当",
+          "summary": "既存の給付・請求システムを活用し、夏のピーク前に動かせる制度設計を重視する立場。",
+          "goals": [
+            "自治体と電力会社が短期間で実装できる制度にする",
+            "対象世帯へ支援が届くまでの遅延を最小化する"
+          ],
+          "constraints": [
+            "新しい認定フローを増やすと運用が間に合わない",
+            "医療・福祉情報を横断利用するには実務上の制約がある"
+          ],
+          "bias_flags": [
+            "administrative_execution",
+            "implementation_risk"
+          ]
         }
       ]
     },
@@ -55,6 +88,21 @@
       "mode": "committee_party_bias_removed",
       "label": "AI Committee (Party Bias Removed)",
       "briefing": "政党ラベルと議席配分の影響を外し、制度設計上の純粋なトレードオフに集中する。",
+      "configuration": {
+        "persona_source": "policy_tradeoff_roles",
+        "party_bias": "removed",
+        "seat_count_influence": "removed",
+        "primary_objectives": [
+          "政党の勝敗から切り離して制度効果を比較する",
+          "対象捕捉率と事務負担のトレードオフを明示する",
+          "健康リスクと財政効率を同じ土俵で点検する"
+        ],
+        "evidence_lens": [
+          "到達率と漏れ",
+          "行政コストと継続可能性",
+          "健康・生活影響の大きさ"
+        ]
+      },
       "institutional_constraints": [
         "制度目的に対する効果と副作用で評価する",
         "政治的勝ち負けではなく論点整理を優先する"
@@ -95,6 +143,24 @@
             "party_labels_removed",
             "accessibility_focus"
           ]
+        },
+        {
+          "id": "persona-local-implementation-analyst",
+          "name": "行政実装アナリスト",
+          "role": "運用設計分析官",
+          "summary": "申請導線、データ連携、自治体窓口負荷の観点から、実装時の詰まりやすさを点検する立場。",
+          "goals": [
+            "既存制度に乗せやすい給付経路を選ぶ",
+            "自治体間で支援の受けやすさがぶれないようにする"
+          ],
+          "constraints": [
+            "複数書類の提出を前提にすると利用率が下がる",
+            "短期間でのシステム改修には限界がある"
+          ],
+          "bias_flags": [
+            "party_labels_removed",
+            "implementation_focus"
+          ]
         }
       ]
     },
@@ -102,6 +168,21 @@
       "mode": "citizens_assembly",
       "label": "AI Citizens' Assembly",
       "briefing": "生活実感の異なる市民の視点から、家計負担、健康リスク、申請のしやすさを検討する。",
+      "configuration": {
+        "persona_source": "citizen_stakeholders",
+        "party_bias": "not_applicable",
+        "seat_count_influence": "not_applicable",
+        "primary_objectives": [
+          "生活条件の違いで支援ニーズがどう変わるかを可視化する",
+          "制度説明の分かりやすさと使いやすさを評価する",
+          "制度政治では取りこぼしやすい当事者視点を残す"
+        ],
+        "evidence_lens": [
+          "家計負担と暑熱リスク",
+          "申請導線の使いやすさ",
+          "家族構成や地域条件による不利益"
+        ]
+      },
       "institutional_constraints": [
         "制度説明のわかりやすさを重視する",
         "当事者が使える支援かどうかで評価する"
@@ -157,6 +238,58 @@
             "household": "4人世帯",
             "health_context": "家族が在宅医療機器を使用",
             "mobility_context": "介護のため長時間の外出が難しい"
+          }
+        },
+        {
+          "id": "persona-single-parent-commuter",
+          "name": "ひとり親の通勤世帯",
+          "role": "市民代表",
+          "summary": "保育園送迎と通勤を抱え、平日日中に役所へ行きにくい就労中のひとり親世帯。",
+          "goals": [
+            "勤務を休まずに申請できる支援を受けたい",
+            "子どもの健康を守るため冷房費の不安を減らしたい"
+          ],
+          "constraints": [
+            "窓口手続きが平日日中のみだと利用しにくい",
+            "家計に余裕がなく支給時期の遅れに耐えにくい"
+          ],
+          "bias_flags": [
+            "citizen_lived_experience"
+          ],
+          "demographics": {
+            "age_range": "30s",
+            "region": "九州",
+            "occupation": "契約社員",
+            "income_band": "低中位",
+            "household": "ひとり親と子ども2人",
+            "health_context": "子どもが喘息傾向で室温管理が必要",
+            "mobility_context": "通勤と送迎で平日日中の来庁が難しい"
+          }
+        },
+        {
+          "id": "persona-rural-small-business-owner",
+          "name": "地方の小規模事業者",
+          "role": "市民代表",
+          "summary": "地方で家族経営の小規模事業を営み、自宅と事業所の双方で夏場の電力負担が重い。",
+          "goals": [
+            "家計と事業の両方を圧迫する電力負担を軽減したい",
+            "居住地域によって支援アクセスが不利にならないようにしたい"
+          ],
+          "constraints": [
+            "公共交通が少なく対面手続きは半日仕事になる",
+            "収入が季節変動し所得判定が実情とずれることがある"
+          ],
+          "bias_flags": [
+            "citizen_lived_experience"
+          ],
+          "demographics": {
+            "age_range": "50s",
+            "region": "東北",
+            "occupation": "自営業",
+            "income_band": "季節変動が大きい",
+            "household": "夫婦と高齢親",
+            "health_context": "高温時も事業継続のため空調を切りにくい",
+            "mobility_context": "役所や相談窓口まで車移動が前提"
           }
         }
       ]

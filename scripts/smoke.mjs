@@ -70,6 +70,69 @@ if (apiRootResponse.statusCode !== 200) {
   throw new Error(`API / returned ${apiRootResponse.statusCode}`);
 }
 
+const apiPersonasResponse = await invokeHandler(handleApiRequest, {
+  url: '/personas',
+  host: 'localhost:3001',
+});
+
+if (apiPersonasResponse.statusCode !== 200) {
+  throw new Error(`API /personas returned ${apiPersonasResponse.statusCode}`);
+}
+
+const personaCatalog = JSON.parse(apiPersonasResponse.body);
+const sampleRegistrySummary = personaCatalog.registries.find(
+  (registry) => registry.dossier_id === 'summer-electricity-relief',
+);
+
+if (!sampleRegistrySummary) {
+  throw new Error('API /personas did not return the sample persona registry');
+}
+
+const institutionReplayMode = sampleRegistrySummary.modes.find(
+  (modeDefinition) => modeDefinition.mode === 'committee_institution_replay',
+);
+const partyRemovedMode = sampleRegistrySummary.modes.find(
+  (modeDefinition) => modeDefinition.mode === 'committee_party_bias_removed',
+);
+const citizensAssemblyMode = sampleRegistrySummary.modes.find(
+  (modeDefinition) => modeDefinition.mode === 'citizens_assembly',
+);
+
+if (!institutionReplayMode || !partyRemovedMode || !citizensAssemblyMode) {
+  throw new Error('API /personas did not enumerate all three MVP deliberation modes');
+}
+
+if (
+  institutionReplayMode.configuration.party_bias !== 'preserved' ||
+  partyRemovedMode.configuration.party_bias !== 'removed'
+) {
+  throw new Error('API /personas did not preserve the expected mode configuration split');
+}
+
+if (citizensAssemblyMode.persona_count < 3) {
+  throw new Error('API /personas did not expose diverse citizen personas');
+}
+
+const apiSamplePersonaRegistryResponse = await invokeHandler(handleApiRequest, {
+  url: '/personas/summer-electricity-relief',
+  host: 'localhost:3001',
+});
+
+if (apiSamplePersonaRegistryResponse.statusCode !== 200) {
+  throw new Error(
+    `API /personas/summer-electricity-relief returned ${apiSamplePersonaRegistryResponse.statusCode}`,
+  );
+}
+
+const samplePersonaRegistry = JSON.parse(apiSamplePersonaRegistryResponse.body);
+const sampleCitizensMode = samplePersonaRegistry.modes.find(
+  (modeDefinition) => modeDefinition.mode === 'citizens_assembly',
+);
+
+if (!sampleCitizensMode?.personas.every((persona) => persona.demographics)) {
+  throw new Error('API /personas/:dossierId did not return citizen demographics');
+}
+
 const webHealthResponse = await invokeHandler(webHandler, {
   url: '/health',
   host: 'localhost:3000',
