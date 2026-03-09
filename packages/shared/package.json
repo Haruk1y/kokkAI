@@ -6,6 +6,7 @@
   "exports": {
     ".": "./src/index.js",
     "./deliberation": "./src/deliberation.js",
+    "./dossiers": "./src/dossiers.js",
     "./health": "./src/health.js",
     "./schemas/deliberation": "./schemas/deliberation.schema.json"
   }

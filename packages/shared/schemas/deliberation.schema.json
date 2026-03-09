@@ -88,6 +88,25 @@
       },
       "minItems": 1
     },
+    "source_provenance": {
+      "type": "object",
+      "description": "Explicit public-source reference used to create a normalized chunk.",
+      "properties": {
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "source_url",
+        "retrieved_at"
+      ],
+      "additionalProperties": false
+    },
     "source_chunk": {
       "type": "object",
       "description": "Traceable chunk-level provenance for a source document.",
@@ -107,6 +126,9 @@
         },
         "text": {
           "$ref": "#/$defs/non_empty_string"
+        },
+        "provenance": {
+          "$ref": "#/$defs/source_provenance"
         }
       },
       "required": [
@@ -114,7 +136,8 @@
         "ordinal",
         "section",
         "locator",
-        "text"
+        "text",
+        "provenance"
       ],
       "additionalProperties": false
     },
@@ -138,6 +161,14 @@
           "type": "string",
           "format": "date"
         },
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
         "language": {
           "type": "string",
           "const": "ja"
@@ -159,6 +190,8 @@
         "document_type",
         "publisher",
         "published_at",
+        "source_url",
+        "retrieved_at",
         "language",
         "summary",
         "chunks"

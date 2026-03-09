@@ -3,6 +3,7 @@ import http from 'node:http';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { loadRepositoryDossiers } from '../../packages/shared/src/dossiers.js';
 import { createHealthPayload, HEALTH_ROUTE } from '../../packages/shared/src/health.js';
 
 const host = '127.0.0.1';
@@ -55,14 +56,21 @@ export async function handleApiRequest(request, response) {
     }
 
     if (request.method === 'GET' && url.pathname === HEALTH_ROUTE) {
-      const seed = await readSeedData();
+      const [seed, dossiers] = await Promise.all([
+        readSeedData(),
+        loadRepositoryDossiers(),
+      ]);
       const payload = createHealthPayload({
         service: 'api',
         notes: [
           'API entrypoint reachable',
           'Seed data loaded from data/seeds/prototype-health.json',
+          `Loaded ${dossiers.length} dossier(s) from data/dossiers`,
         ],
-        seed,
+        seed: {
+          ...seed,
+          dossier_ids: dossiers.map((dossier) => dossier.id),
+        },
       });
 
       writeJson(response, 200, payload);

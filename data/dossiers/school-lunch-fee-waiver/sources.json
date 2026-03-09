@@ -1,0 +1,98 @@
+{
+  "source_documents": [
+    {
+      "id": "mext-school-lunch-status-2024-06-12",
+      "title": "学校給食実施状況等調査（令和5年度）結果の概要",
+      "document_type": "statistics",
+      "publisher": "文部科学省",
+      "published_at": "2024-06-12",
+      "source_url": "https://www.mext.go.jp/content/20240612-mxt-kenshoku-000036395-1.pdf",
+      "retrieved_at": "2026-03-09T00:00:00Z",
+      "language": "ja",
+      "summary": "令和5年度の完全給食実施率と保護者負担月額の全国集計。",
+      "chunks": [
+        {
+          "id": "mext-school-lunch-status-2024-06-12-chunk-1",
+          "ordinal": 1,
+          "section": "完全給食実施率と保護者負担",
+          "locator": "p.15",
+          "text": "令和5年度の完全給食実施率は小学校98.8%、中学校89.8%で、保護者負担月額の全国平均は小学校4,688円、中学校5,367円と整理されている。",
+          "provenance": {
+            "source_url": "https://www.mext.go.jp/content/20240612-mxt-kenshoku-000036395-1.pdf",
+            "retrieved_at": "2026-03-09T00:00:00Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mext-school-lunch-waiver-issues-2024-12-27",
+      "title": "「給食無償化」に関する課題の整理について",
+      "document_type": "other",
+      "publisher": "文部科学省",
+      "published_at": "2024-12-27",
+      "source_url": "https://www.mext.go.jp/content/20241227-mxt_kenshoku-000039428_1.pdf",
+      "retrieved_at": "2026-03-09T00:00:00Z",
+      "language": "ja",
+      "summary": "学校給食費無償化を全国制度化する際の制度論点と自治体の先行実施状況の整理。",
+      "chunks": [
+        {
+          "id": "mext-school-lunch-waiver-issues-2024-12-27-chunk-1",
+          "ordinal": 1,
+          "section": "主な制度論点",
+          "locator": "p.3",
+          "text": "文部科学省は、給食を実施していない学校の児童生徒や弁当持参の生徒との公平性、学校給食法上の位置付け、無償化による教育の質向上の検証を主要論点として列挙している。",
+          "provenance": {
+            "source_url": "https://www.mext.go.jp/content/20241227-mxt_kenshoku-000039428_1.pdf",
+            "retrieved_at": "2026-03-09T00:00:00Z"
+          }
+        },
+        {
+          "id": "mext-school-lunch-waiver-issues-2024-12-27-chunk-2",
+          "ordinal": 2,
+          "section": "自治体の先行実施",
+          "locator": "p.4",
+          "text": "同資料は、給食費無償化を実施済みの自治体が722、何らかの負担軽減を行う自治体が2,546にのぼるとして、先行施策が広がる一方で制度設計は自治体ごとにばらついていると示している。",
+          "provenance": {
+            "source_url": "https://www.mext.go.jp/content/20241227-mxt_kenshoku-000039428_1.pdf",
+            "retrieved_at": "2026-03-09T00:00:00Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "diet-budget-2025-02-26-school-lunch",
+      "title": "第217回国会 予算委員会 第16号",
+      "document_type": "diet_minutes",
+      "publisher": "衆議院",
+      "published_at": "2025-02-26",
+      "source_url": "https://kokkai.ndl.go.jp/simple/detail?minId=121705261X01620250226",
+      "retrieved_at": "2026-03-09T00:00:00Z",
+      "language": "ja",
+      "summary": "学校給食費無償化をめぐる財源、公平性、国と地方の役割分担に関する予算委員会質疑。",
+      "chunks": [
+        {
+          "id": "diet-budget-2025-02-26-school-lunch-chunk-1",
+          "ordinal": 1,
+          "section": "山下貴司委員質疑",
+          "locator": "発言356",
+          "text": "与党質疑では、給食無償化には5,000億円近い安定財源が必要で、未実施校との公平性、国と地方の役割分担、少子化対策としての効果検証が論点として示された。",
+          "provenance": {
+            "source_url": "https://kokkai.ndl.go.jp/simple/txt/121705261X01620250226/356",
+            "retrieved_at": "2026-03-09T00:00:00Z"
+          }
+        },
+        {
+          "id": "diet-budget-2025-02-26-school-lunch-chunk-2",
+          "ordinal": 2,
+          "section": "加藤勝信財務大臣答弁",
+          "locator": "発言364",
+          "text": "財務大臣は、地域によって完全給食化や無償化の状況が異なり、その背景に自治体財政の差があると述べた上で、学校給食法との関係、国と地方の関係、効果検証を十分に検討すると答弁した。",
+          "provenance": {
+            "source_url": "https://kokkai.ndl.go.jp/simple/txt/121705261X01620250226/364",
+            "retrieved_at": "2026-03-09T00:00:00Z"
+          }
+        }
+      ]
+    }
+  ]
+}
