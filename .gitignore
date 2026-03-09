@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local environment and secrets
+.env
+.env.local
+.envrc
+.env.*.local
+.env.symphony.local
+!.env.symphony.example
+
+# Local tool overrides
+.direnv/
+.mise.local.toml
+
+# Local runtime noise
+*.log
+*.tmp
+*.pdf
