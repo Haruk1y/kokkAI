@@ -1,16 +1,74 @@
-# kokkAI Symphony Setup
+# kokkAI Prototype
 
-This repository now contains the minimum files needed to run
+This repository now contains the initial bootstrap for `HAR-5`, plus the
+Symphony workflow and proposal-derived context needed to keep autonomous work
+grounded in the project spec.
+
+## Repository Layout
+
+```text
+apps/
+  api/        Node HTTP API with `/` and `/health`
+  web/        Node HTTP web app with `/` and `/health`
+packages/
+  shared/     Shared health schema helpers used by web and API
+data/
+  seeds/      Prototype seed data consumed by the API
+docs/
+  *.md        Proposal brief, prototype spec, and Symphony backlog
+scripts/      Repo-local dev, lint, format, and smoke-test utilities
+```
+
+## Local Development
+
+Requirements:
+
+- Node.js 20+
+- npm 10+
+
+Install the workspace:
+
+```bash
+npm install
+```
+
+Start the web app and API together:
+
+```bash
+npm run dev
+```
+
+Entry points:
+
+- Web: `http://localhost:3000/`
+- Web health page: `http://localhost:3000/health`
+- API: `http://localhost:3001/`
+- API health route: `http://localhost:3001/health`
+
+## Quality Gates
+
+Normalize repository formatting:
+
+```bash
+npm run format
+```
+
+Run syntax and data-file checks:
+
+```bash
+npm run lint
+```
+
+Run the full validation sweep:
+
+```bash
+npm run validate
+```
+
+## Symphony Workflow
+
+The repository also includes the minimum files needed to run
 [OpenAI Symphony](https://github.com/openai/symphony) against `kokkAI`.
-
-## Current State
-
-- `origin` points to `git@github.com:Haruk1y/kokkAI.git`
-- the repository is almost empty right now
-- Symphony can still run, but each issue workspace will clone an almost empty
-  repo until application code is added
-
-## Files Added For Symphony
 
 - `WORKFLOW.md`
 - `.env.symphony.example`
@@ -22,16 +80,13 @@ This repository now contains the minimum files needed to run
 - `.codex/skills/push/SKILL.md`
 - `.codex/skills/land/SKILL.md`
 - `.codex/skills/linear/SKILL.md`
+- `.codex/skills/symphony-linear-ops/SKILL.md`
 - `.github/pull_request_template.md`
-
-## Host Setup
 
 Symphony itself runs from the official repository. The current public reference
 implementation is under `elixir/`.
 
-The commands below use `/tmp/openai-symphony` for a quick local setup. If you
-want the installation to survive cleanup or reboot, clone it to a persistent
-directory and adjust the commands accordingly.
+To run it locally:
 
 1. Install `mise` and `gh`
 
@@ -106,7 +161,7 @@ is the project-specific part of the URL.
 
 ## Proposal-Driven Prototyping
 
-The repository now includes a structured implementation context derived from
+The repository includes structured implementation context derived from
 `未踏IT2026_提案資料1.pdf`.
 
 - `docs/proposal-brief.md`
@@ -116,19 +171,13 @@ The repository now includes a structured implementation context derived from
 - `docs/symphony-backlog.md`
   turns the proposal into issue-sized implementation steps for Symphony
 
-The intended workflow is:
-
-1. create a Linear project for `kokkAI`
-2. create issues from `docs/symphony-backlog.md`
-3. update the `project_slug` in `WORKFLOW.md`
-4. start Symphony
-5. move the first issue to `Todo`
-
 This gives Symphony enough context to do autonomous MVP development instead of
 working from the PDF directly.
 
-## First Useful Check
+## Notes
 
-After Symphony starts, move one Linear ticket for the configured project to
-`Todo`. Symphony should claim it, clone this repo into the workspace root, and
-open a Codex app-server session for that issue.
+- The bootstrap intentionally uses a minimal Node workspace so the MVP can be
+  installed and validated quickly.
+- `codex` is already installed on this machine, so the workflow uses
+  `codex app-server` directly.
+- The default source repo URL is `git@github.com:Haruk1y/kokkAI.git`.
