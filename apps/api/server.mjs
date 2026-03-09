@@ -5,6 +5,11 @@ import { fileURLToPath } from 'node:url';
 
 import { loadRepositoryDossiers } from '../../packages/shared/src/dossiers.js';
 import { createHealthPayload, HEALTH_ROUTE } from '../../packages/shared/src/health.js';
+import {
+  buildPersonaRegistrySummary,
+  loadRepositoryPersonaRegistries,
+  loadRepositoryPersonaRegistryByDossierId,
+} from '../../packages/shared/src/personas.js';
 
 const host = '127.0.0.1';
 const port = Number(process.env.API_PORT ?? '3001');
@@ -56,9 +61,10 @@ export async function handleApiRequest(request, response) {
     }
 
     if (request.method === 'GET' && url.pathname === HEALTH_ROUTE) {
-      const [seed, dossiers] = await Promise.all([
+      const [seed, dossiers, personaRegistries] = await Promise.all([
         readSeedData(),
         loadRepositoryDossiers(),
+        loadRepositoryPersonaRegistries(),
       ]);
       const payload = createHealthPayload({
         service: 'api',
@@ -66,14 +72,42 @@ export async function handleApiRequest(request, response) {
           'API entrypoint reachable',
           'Seed data loaded from data/seeds/prototype-health.json',
           `Loaded ${dossiers.length} dossier(s) from data/dossiers`,
+          `Loaded ${personaRegistries.length} persona registries from data/personas`,
         ],
         seed: {
           ...seed,
           dossier_ids: dossiers.map((dossier) => dossier.id),
+          persona_registry_dossier_ids: personaRegistries.map((registry) => registry.dossier_id),
         },
       });
 
       writeJson(response, 200, payload);
+      return;
+    }
+
+    if (request.method === 'GET' && url.pathname === '/personas') {
+      const registries = await loadRepositoryPersonaRegistries();
+
+      writeJson(response, 200, {
+        registries: registries.map((registry) => buildPersonaRegistrySummary(registry)),
+      });
+      return;
+    }
+
+    const pathSegments = url.pathname.split('/').filter(Boolean);
+    if (request.method === 'GET' && pathSegments[0] === 'personas' && pathSegments.length === 2) {
+      const dossierId = decodeURIComponent(pathSegments[1]);
+      const registry = await loadRepositoryPersonaRegistryByDossierId(dossierId);
+
+      if (!registry) {
+        writeJson(response, 404, {
+          error: 'Not Found',
+          path: url.pathname,
+        });
+        return;
+      }
+
+      writeJson(response, 200, registry);
       return;
     }
 

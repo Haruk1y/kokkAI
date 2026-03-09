@@ -30,6 +30,22 @@
         "citizens_assembly"
       ]
     },
+    "mode_persona_source": {
+      "type": "string",
+      "enum": [
+        "institutional_roles",
+        "policy_tradeoff_roles",
+        "citizen_stakeholders"
+      ]
+    },
+    "mode_bias_setting": {
+      "type": "string",
+      "enum": [
+        "preserved",
+        "removed",
+        "not_applicable"
+      ]
+    },
     "document_type": {
       "type": "string",
       "enum": [
@@ -279,6 +295,35 @@
         "briefing": {
           "$ref": "#/$defs/non_empty_string"
         },
+        "configuration": {
+          "type": "object",
+          "description": "Inspectable configuration that differentiates the three deliberation modes.",
+          "properties": {
+            "persona_source": {
+              "$ref": "#/$defs/mode_persona_source"
+            },
+            "party_bias": {
+              "$ref": "#/$defs/mode_bias_setting"
+            },
+            "seat_count_influence": {
+              "$ref": "#/$defs/mode_bias_setting"
+            },
+            "primary_objectives": {
+              "$ref": "#/$defs/string_list"
+            },
+            "evidence_lens": {
+              "$ref": "#/$defs/string_list"
+            }
+          },
+          "required": [
+            "persona_source",
+            "party_bias",
+            "seat_count_influence",
+            "primary_objectives",
+            "evidence_lens"
+          ],
+          "additionalProperties": false
+        },
         "institutional_constraints": {
           "$ref": "#/$defs/string_list"
         },
@@ -294,6 +339,7 @@
         "mode",
         "label",
         "briefing",
+        "configuration",
         "institutional_constraints",
         "personas"
       ],
