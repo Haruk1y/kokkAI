@@ -76,6 +76,11 @@ mise exec -- ./bin/symphony \
   --port "${SYMPHONY_PORT:-4050}"
 ```
 
+For unattended publication, keep the workflow on `danger-full-access`. In
+practice, `workspace-write` prevents Codex from writing `.git` metadata such as
+branch refs and `.git/index.lock`, which blocks branch creation, commits, and
+PR creation.
+
 ## Linear Requirements
 
 Before starting Symphony, configure Linear:

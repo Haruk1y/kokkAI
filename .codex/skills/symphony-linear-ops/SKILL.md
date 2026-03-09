@@ -99,6 +99,14 @@ Outside app-server, use direct GraphQL requests.
 Source `.env.symphony.local`, then start Symphony with the required safety
 acknowledgement flag.
 
+If unattended runs must create branches, commits, pushes, or PRs, do not leave
+Codex in `workspace-write` mode. In practice, that sandbox blocks writes to
+`.git` metadata such as `refs/heads/*` and `.git/index.lock`, which prevents
+branch creation and commits. Use:
+
+- `codex.thread_sandbox: danger-full-access`
+- `codex.turn_sandbox_policy.type: dangerFullAccess`
+
 Successful validation means:
 
 - Symphony starts without `Linear API token missing`
@@ -115,6 +123,9 @@ Successful validation means:
 - no candidate issues
   usually means wrong `project_slug`, wrong state names, or simply no issues in
   active states
+- branch / commit / PR publication fails with `.git` permission errors
+  usually means Codex is still running under `workspace-write`; switch both
+  sandbox settings to danger-full-access and restart Symphony
 - missing `linear_graphql`
   means you are not inside a Symphony app-server session
 
